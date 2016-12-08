@@ -1,5 +1,5 @@
-var chatRoom = angular.module('argue.chatroom', []);
+var chatroom = angular.module('argue.chatroom', []);
 
-chatRoom.controller('chatRoomController', function($scope, Chatroom) {
+chatroom.controller('chatroomController', function($scope, Chatroom) {
 
 });
