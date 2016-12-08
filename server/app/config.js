@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, {
+var sequelize = new Sequelize('james', 'root', process.env.MYSQL_PASSWORD, {
   host: 'localhost',
   dialect: 'mysql'
 });
@@ -30,38 +30,38 @@ Message.belongsTo(Chatroom);
 // User.hasMany(Chatroom, {as: 'chatrooms'});
 
 User.sync({force: false}).then(function () {
-  User.create({
-    username: 'James',
-    image_url: 'https://avatars2.githubusercontent.com/u/18106668?v=3&s=460',
-  });
+  // User.create({
+  //   username: 'James',
+  //   image_url: 'https://avatars2.githubusercontent.com/u/18106668?v=3&s=460',
+  // });
 });
 
 User.sync({force: false}).then(function () {
-  User.create({
-    username: 'Evan',
-    image_url: 'https://avatars1.githubusercontent.com/u/20055140?v=3&s=460',
-  });
+  // User.create({
+  //   username: 'Evan',
+  //   image_url: 'https://avatars1.githubusercontent.com/u/20055140?v=3&s=460',
+  // });
 });
 
 Chatroom.sync({force: false}).then(function () {
-  Chatroom.create({
-    hash: '12345',
-    roomName: 'Hillary v Donald',
-    status: 'closed',
-    firstUser: 1,
-    secondUser: 2
-  });
+  // Chatroom.create({
+  //   hash: '12345',
+  //   roomName: 'Hillary v Donald',
+  //   status: 'closed',
+  //   firstUser: 1,
+  //   secondUser: 2
+  // });
 });
 
 Message.sync({force: false}).then(function () {
-  Message.create({
-    text: 'They both suck.',
-    userId: 1,
-    chatroomId: 1
-  });
+  // Message.create({
+  //   text: 'They both suck.',
+  //   userId: 1,
+  //   chatroomId: 1
+  // });
 });
 
-
+module.exports.Chatroom = Chatroom;
 
 
 

@@ -35,8 +35,8 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
   $scope.fetchRooms = function() {
     var thisScope = $scope;
     Lobby.fetchRooms(function(rooms) {
-      thisScope.allRooms.rooms = $scope.exampleRoomData.rooms;
-      console.log(rooms);
+      thisScope.allRooms.rooms = rooms.data;
+      console.log('rooms in lobby.js',rooms.data);
     });
   }
 
