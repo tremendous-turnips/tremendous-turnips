@@ -1,0 +1,13 @@
+<div> 
+  <h1> Lobby </h1>
+  <button> Tokens </button>
+  <button> Logout </button>
+</div>
+
+<div class='roomContainer'> 
+  <div class='room' ng-repeat='room in allRooms.rooms track by $index'>
+    <span> {{room.username1}}</span>
+    <span> {{room.topic}}</span> 
+    <span> {{room.username2}}</span>
+  </div>
+</div>
