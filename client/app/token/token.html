@@ -1,0 +1,25 @@
+<div ng-controller="tokenController">
+  <h2>Stats</h2>
+  <div>
+    Length of Debate: {{lengthOfTime}}
+  </div>
+  <div>
+    Word Count:
+    <div>
+      You: {{userWordCount}} {{userWordCountPercentage}}
+      <br />
+      {{opponent}}: {{opponentWordCount}} {{opponentWordCountPercentage}}
+    </div>
+  </div>
+  <div>
+    Most used word:
+    <div>
+      You: {{userMostUsedWord}}
+      <br />
+      {{opponent}}: {{opponentMostUsedWord}}
+    </div>
+  </div>
+  <div>
+    You're awesome! Keep on doing what you're doing!
+  </div>
+</div>
