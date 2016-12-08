@@ -6,7 +6,9 @@ token.controller('tokenController', function($scope, $location, Token) {
     $scope.myuser = result.data;
   }).then(function() {
     if ($scope.myuser !== '') {
-
+      $scope.leaveRoom = function() {
+        $location.path('/lobby');
+      }
     } else {
       $location.path('/login');
     }
