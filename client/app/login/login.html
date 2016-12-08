@@ -3,8 +3,8 @@
   <h3>Please enter a username</h3>
 </div>
 <div>
-  <form>
-    <input placeholder="Enter username" />
+  <form ng-submit='submitUsername()'>
+    <input placeholder="Enter username" ng-model='username' />
     <button> Submit </button>
   </form>
 </div>
