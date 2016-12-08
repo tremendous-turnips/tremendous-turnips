@@ -6,11 +6,14 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var db = require('./app/config.js');
 var Sequelize = require('sequelize');
+var session = require('express-session');
 
+
+
+var port = process.env.PORT || 1337;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-var port = process.env.PORT || 1337;
-
+app.use(session({secret: 'COOKIE'}));
 app.use(express.static('client'));
 app.use(bodyParser.json());
 
@@ -40,9 +43,19 @@ app.use(express.static('socket.io'));
 ////////////////////////////////////////////////////////////////////////////////
 
 app.post('/users', function(req, res) {
-  console.log('GOT USER', req.body.username);
-  res.status('200').json(req.body);
+  req.session.username = req.body.username;
+  console.log('got it');
+  res.status('200').json(req.session.username);
 });
+
+app.get('/validLogin', function(req, res) {
+  res.status('200').send(req.session.username);
+})
+app.get('/logout', function(req, res) {
+  req.session.destroy (function() {
+    res.status(200).send('destroyed');
+  });
+})
 
 server.listen(port, function() {});
 // app.listen(port, function() {
