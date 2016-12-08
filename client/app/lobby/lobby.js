@@ -30,5 +30,15 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
     //Lobby.get
   };
 
+  $scope.redirectToToken = function(path) {
+    Lobby.redirect(path);
+  }
+
+  $scope.logout = function(path) {
+
+    // DESTROY SESSION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    Lobby.redirect(path);
+  }
 
 });
