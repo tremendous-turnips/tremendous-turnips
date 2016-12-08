@@ -57,7 +57,7 @@ app.get('/logout', function(req, res) {
   });
 })
 
+console.log('Server running on port', port);
 server.listen(port, function() {});
 // app.listen(port, function() {
-//   console.log('Server running on port', port);
 // });
