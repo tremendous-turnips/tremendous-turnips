@@ -1,0 +1,22 @@
+{
+  "name": "tremendous-turnips",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tremendous-turnips/tremendous-turnips.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tremendous-turnips/tremendous-turnips/issues"
+  },
+  "homepage": "https://github.com/tremendous-turnips/tremendous-turnips#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
