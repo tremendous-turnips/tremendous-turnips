@@ -35,7 +35,6 @@ services.factory('Lobby', function($location, $http) {
     return $http({
       method: 'GET',
       url: '/lobby'
-      // data: username
     })
     .then(function (rooms) {
       callback(rooms);
