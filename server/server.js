@@ -51,7 +51,7 @@ app.post('/users', function(req, res) {
 app.get('/validLogin', function(req, res) {
   res.status('200').send(req.session.username);
 })
-app.get('/logout', function(req, res) {
+app.post('/logout', function(req, res) {
   req.session.destroy (function() {
     res.status(200).send('destroyed');
   });

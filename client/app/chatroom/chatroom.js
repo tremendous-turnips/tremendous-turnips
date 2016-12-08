@@ -1,18 +1,26 @@
 var chatroom = angular.module('argue.chatroom', []);
 
-chatroom.controller('chatroomController', ['$scope', function($scope, Chatroom) {
-  var socket = io();
-  
-  socket.on('connected', function (data) {
-    console.log(data);
-  });
+chatroom.controller('chatroomController', function($scope, $location, Chatroom) {
+  Chatroom.validateUser(function(result) {
+    $scope.myuser = result.data;
+  }).then(function() {
+    if ($scope.myuser !== '') {
+      var socket = io();
 
-  socket.on('listeningForMessage', function (data) {
-    $scope.opponentCurrentMessage = data;
-  });
+      socket.on('connected', function (data) {
+        console.log(data);
+      });
 
-  $scope.sendMessage = function() {
-    socket.emit('typingMessage', $scope.userMessage);
-  }
+      socket.on('listeningForMessage', function (data) {
+        $scope.opponentCurrentMessage = data;
+      });
 
-}]);
+      $scope.sendMessage = function() {
+        socket.emit('typingMessage', $scope.userMessage);
+      }
+    } else {
+      $location.path('/login');
+    }
+  })
+
+});

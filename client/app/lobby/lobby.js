@@ -39,15 +39,16 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
       };
 
       $scope.redirectToToken = function(path) {
-        Lobby.redirect(path);
+        $location.path('/token')
       }
 
       $scope.logout = function(path) {
         // DESTROY SESSION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        Lobby.redirect(path);
+        Lobby.logoutUser();
+        $location.path('/login')
       }
     } else {
-      Lobby.redirect('/login');
+      $location.path('/login')
     }
   })
 
