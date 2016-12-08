@@ -1,11 +1,9 @@
 var lobby = angular.module('argue.lobby', []);
 
 
-lobby.controller('lobbyController', function($scope, Lobby) {
-
-  //rooms info
-    //username1
-  $scope.myuser = 'even chang';
+lobby.controller('lobbyController', function($scope, $location, Lobby) {
+  
+  $scope.myuser = 'even chang'; // SESSION VARIABLE
   $scope.allRooms = {
     rooms: [
       {
@@ -20,9 +18,17 @@ lobby.controller('lobbyController', function($scope, Lobby) {
     ]
   };
 
-  // var insertUsername = function() {
-    
-  // };
+  // getUsers = function() {
+    //Lobby.get
+  //}
+
+  $scope.insertUser = function(index, user) {
+    console.log('in insertUser');
+    $scope.allRooms.rooms[index]['username' + user] = $scope.myuser;
+    $location.path('/chatroom');
+    //Lobby.post
+    //Lobby.get
+  };
 
 
 });

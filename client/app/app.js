@@ -3,10 +3,10 @@ angular.module('argue', [
     'argue.login',
     'argue.chatroom',
     'argue.token',
+    'argue.lobby',
     'ngRoute'
   ])
   .config(function($routeProvider, $httpProvider) {
-    console.log('shit');
     $routeProvider
     .when('/login', {
       templateUrl: 'app/login/login.html',
