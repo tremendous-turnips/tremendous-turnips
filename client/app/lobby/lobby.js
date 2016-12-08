@@ -5,7 +5,6 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
   Lobby.validateUser(function(result) {
     $scope.myuser = result.data;
   }).then(function() {
-    console.log($scope.myuser);
     if ($scope.myuser !== '') {
       $scope.allRooms = {
         rooms: [
@@ -44,9 +43,7 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
       }
 
       $scope.logout = function(path) {
-
         // DESTROY SESSION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
         Lobby.redirect(path);
       }
     } else {
