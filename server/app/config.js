@@ -62,6 +62,5 @@ Message.sync({force: false}).then(function () {
 });
 
 module.exports.Chatroom = Chatroom;
-
-
-
+module.exports.User = User;
+module.exports.Message = Message;
