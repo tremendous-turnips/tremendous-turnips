@@ -23,8 +23,8 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
       $scope.fetchRooms = function() {
         var thisScope = $scope;
         Lobby.fetchRooms(function(rooms) {
-          thisScope.allRooms.rooms = rooms;
-          console.log(rooms);
+          thisScope.allRooms.rooms = rooms.data;
+          console.log(rooms, 'inside fetchrooms in lobby controller');
         });
       }
 
