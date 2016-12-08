@@ -18,20 +18,6 @@ app.get('/', function(req, res) {
   res.sendFile(path(__dirname,'client/index.html'));
 });
 
-var exampleRoomData = {
-  rooms: [
-    {
-      firstUser: '_____',
-      secondUser: '_____',
-      roomName: 'DONALDERINO'
-    }, {
-      firstUser: '_____',
-      secondUser: '_____',
-      roomName: 'somethingelse'
-    } 
-  ]
-};
-
 app.get('/lobby', function(req, res) {
   db.Chatroom.findAll()
   .then(function(rooms) {
