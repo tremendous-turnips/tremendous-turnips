@@ -6,7 +6,11 @@ services.factory('Logins', function() {
 });
 
 services.factory('Lobby', function() {
-  
+    
 
+  return {};
+});
+
+services.factory('Chatroom', function() {
   return {};
 });
