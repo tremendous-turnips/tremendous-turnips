@@ -24,6 +24,7 @@ angular.module('argue', [
       templateUrl: 'app/token/token.html',
       controller: 'tokenController'
     })
+    .otherwise({redirectTo: '/login'});
   });
 
 

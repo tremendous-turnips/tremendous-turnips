@@ -1,13 +1,13 @@
-<div> 
+<div>
   <h1> Lobby </h1>
-  <button ng-click='redirectToToken("/token")'> Tokens </button>
-  <button ng-click='logout("/login")'> Logout </button>
+  <button ng-click='redirectToToken()'> Tokens </button>
+  <button ng-click='logout()'> Logout </button>
 </div>
 
-<div class='roomContainer'> 
+<div class='roomContainer'>
   <div class='room' ng-repeat='room in allRooms.rooms track by $index'>
     <span ng-click='insertUser($index, 1)'> {{room.firstUser}}</span>
-    <span> {{room.roomName}}</span> 
+    <span> {{room.roomName}}</span>
     <span ng-click='insertUser($index, 2)'> {{room.secondUser}}</span>
   </div>
 </div>

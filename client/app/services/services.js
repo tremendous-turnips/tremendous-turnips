@@ -31,10 +31,6 @@ services.factory('Lobby', function($location, $http) {
     })
   }
 
-  var redirect = function(path) {
-    $location.path(path);
-  }
-
   var fetchRooms = function(callback) {
     return $http({
       method: 'GET',
@@ -46,17 +42,51 @@ services.factory('Lobby', function($location, $http) {
     });
   }
 
+  var logoutUser = function() {
+    return $http({
+      method: 'POST',
+      url: '/logout'
+    })
+    .then(function() {
+      console.log('SUCCESSFULLY LOGGED OUT');
+    });
+  }
+
   return {
     validateUser: validateUser,
-    redirect: redirect,
-    fetchRooms: fetchRooms
+    fetchRooms: fetchRooms,
+    logoutUser: logoutUser
   };
 });
 
-services.factory('Chatroom', function() {
-  return {};
+services.factory('Chatroom', function($http) {
+  var validateUser = function(cb) {
+    return $http({
+      method: 'GET',
+      url: '/validLogin'
+    })
+    .then(function(result) {
+      cb(result);
+    })
+  }
+
+
+  return {
+    validateUser: validateUser
+  };
 });
 
-services.factory('Token', function() {
-  return {};
+services.factory('Token', function($http) {
+    var validateUser = function(cb) {
+    return $http({
+      method: 'GET',
+      url: '/validLogin'
+    })
+    .then(function(result) {
+      cb(result);
+    })
+  }
+  return {
+    validateUser: validateUser
+  };
 });
