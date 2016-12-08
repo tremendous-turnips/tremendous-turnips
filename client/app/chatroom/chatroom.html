@@ -1,13 +1,11 @@
 <div>
   <h1> CHATROOM</h1>
 </div>
-<div>
-  <form name="userResponseForm" ng-controller="chatroomController">
-    <input placeholder="Go forth and debate..." ng-model="userMessage" ng-keyup="sendMessage()" >
+<div ng-controller="chatroomController">
+  Opponent message: {{opponentCurrentMessage}}
+  <ul class="messageList"></ul>
+  <form name="userResponseForm" ng-submit="postMessage()">
+    <input class="messageTextBox" placeholder="Go forth and debate..." ng-model="userMessage" ng-keyup="displayMessage()" >
     <button> Send </button>
-    <div class="messageTextBox">
-      {{userMessage}}
-      Opponent message: {{opponentCurrentMessage}}
-    </div>
   </form>
 </div>

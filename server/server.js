@@ -31,15 +31,13 @@ app.get('/lobby', function(req, res) {
 ////////////////////////////////////////////////////////////////////////////////
 // SOCKET.IO
 ////////////////////////////////////////////////////////////////////////////////
-io.on('connection', function (socket) {
-  socket.emit('connected', 'you connected to the server!');
-  socket.on('typingMessage', function (data) {
-    console.log('this is what is getting typed: ', data);
-    socket.emit('listeningForMessage', data);
-  })
-});
+var chatroom1 = io.of('/chatroom');
 
-app.use(express.static('socket.io'));
+chatroom1.on('connection', function(socket) {
+  socket.on('chat message', function(msg) {
+    socket.broadcast.emit('posted message', msg);
+  });
+});
 ////////////////////////////////////////////////////////////////////////////////
 
 app.post('/users', function(req, res) {
