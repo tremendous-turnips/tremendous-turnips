@@ -19,9 +19,11 @@ chatroom.controller('chatroomController', function($scope, $location, Chatroom) 
 
       $scope.postMessage = function() {
         // submit a post request to the server to send the message
-        socket.emit('chat message', $scope.userMessage); // This is a socket, not post request
+        var concatMessage = $scope.myuser + ': ' +$scope.userMessage
+        socket.emit('chat message', concatMessage); // This is a socket, not post request
 
         // Clear message text box
+        $('.messageList').append($('<li>').text(concatMessage));
         $('.messageTextBox').val('');
       };
 
