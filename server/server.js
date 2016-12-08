@@ -22,7 +22,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/lobby', function(req, res) {
-  db.Chatroom.findAll()
+  db.Chatroom.findAll({})
   .then(function(rooms) {
     res.send(JSON.stringify(rooms));
   })
