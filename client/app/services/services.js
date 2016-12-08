@@ -12,16 +12,29 @@ services.factory('Logins', function($http) {
       return resp;
     });
   }
+
   return {
     postUsername: postUsername
   };
 });
 
 services.factory('Lobby', function($location, $http) {
+
+
+  var validateUser = function(cb) {
+    return $http({
+      method: 'GET',
+      url: '/validLogin'
+    })
+    .then(function(result) {
+      cb(result);
+    })
+  }
+
   var redirect = function(path) {
     $location.path(path);
   }
-  
+
   var fetchRooms = function(callback) {
     return $http({
       method: 'GET',
@@ -34,6 +47,7 @@ services.factory('Lobby', function($location, $http) {
   }
 
   return {
+    validateUser: validateUser,
     redirect: redirect,
     fetchRooms: fetchRooms
   };

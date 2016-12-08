@@ -2,63 +2,56 @@ var lobby = angular.module('argue.lobby', []);
 
 
 lobby.controller('lobbyController', function($scope, $location, Lobby) {
-  
-  $scope.myuser = 'even chang'; // SESSION VARIABLE
-  $scope.allRooms = {
-    rooms: [
-      {
-        firstUser: '_____',
-        secondUser: '_____',
-        roomName: 'DONALDERINO'
-      }, {
-        firstUser: '_____',
-        secondUser: '_____',
-        roomName: 'somethingelse'
-      } 
-    ]
-  };
+  Lobby.validateUser(function(result) {
+    $scope.myuser = result.data;
+  }).then(function() {
+    console.log($scope.myuser);
+    if ($scope.myuser !== '') {
+      $scope.allRooms = {
+        rooms: [
+          {
+            username1: '_____',
+            username2: '_____',
+            topic: 'DONALDERINO'
+          }, {
+            username1: '_____',
+            username2: '_____',
+            topic: 'somethingelse'
+          }
+        ]
+      };
 
-  $scope.exampleRoomData = {
-  rooms: [
-    {
-      firstUser: '_____',
-      secondUser: '_____',
-      roomName: 'DONALDERINO'
-    }, {
-      firstUser: '_____',
-      secondUser: '_____',
-      roomName: 'somethingelse'
-    } 
-  ]
-};
+      $scope.fetchRooms = function() {
+        var thisScope = $scope;
+        Lobby.fetchRooms(function(rooms) {
+          thisScope.allRooms.rooms = rooms;
+          console.log(rooms);
+        });
+      }
 
-  $scope.fetchRooms = function() {
-    var thisScope = $scope;
-    Lobby.fetchRooms(function(rooms) {
-      thisScope.allRooms.rooms = rooms.data;
-      console.log('rooms in lobby.js',rooms.data);
-    });
-  }
+      $scope.fetchRooms();
 
-  $scope.fetchRooms();
+      $scope.insertUser = function(index, user) {
+        console.log('in insertUser');
+        $scope.allRooms.rooms[index]['username' + user] = $scope.myuser;
+        $location.path('/chatroom');
+        //Lobby.post
+        //Lobby.get
+      };
 
-  $scope.insertUser = function(index, user) {
-    console.log('in insertUser');
-    $scope.allRooms.rooms[index]['username' + user] = $scope.myuser;
-    $location.path('/chatroom');
-    //Lobby.post
-    //Lobby.get
-  };
+      $scope.redirectToToken = function(path) {
+        Lobby.redirect(path);
+      }
 
-  $scope.redirectToToken = function(path) {
-    Lobby.redirect(path);
-  }
+      $scope.logout = function(path) {
 
-  $scope.logout = function(path) {
+        // DESTROY SESSION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    // DESTROY SESSION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-    Lobby.redirect(path);
-  }
+        Lobby.redirect(path);
+      }
+    } else {
+      Lobby.redirect('/login');
+    }
+  })
 
 });

@@ -25,6 +25,6 @@ angular.module('argue', [
       controller: 'tokenController'
     })
   });
-  
+
 
 
