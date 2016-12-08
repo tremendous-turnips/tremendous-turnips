@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var db = require('./app/config.js');
+var Sequelize = require('sequelize');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -16,8 +18,25 @@ app.get('/', function(req, res) {
   res.sendFile(path(__dirname,'client/index.html'));
 });
 
+var exampleRoomData = {
+  rooms: [
+    {
+      firstUser: '_____',
+      secondUser: '_____',
+      roomName: 'DONALDERINO'
+    }, {
+      firstUser: '_____',
+      secondUser: '_____',
+      roomName: 'somethingelse'
+    } 
+  ]
+};
+
 app.get('/lobby', function(req, res) {
-  res.send(JSON.stringify({data: 'placeholder for db fetch'}));
+  db.Chatroom.findAll()
+  .then(function(rooms) {
+    res.send(JSON.stringify(rooms));
+  })
 });
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -17,26 +17,19 @@ services.factory('Logins', function($http) {
   };
 });
 
-services.factory('Lobby', function($location) {
+services.factory('Lobby', function($location, $http) {
   var redirect = function(path) {
     $location.path(path);
   }
   
   var fetchRooms = function(callback) {
-    
-    // PLACEHOLDER AJAX CALL, EXPECTS "{data: 'somedata'}"
-    $.ajax({
-      url: baseUrl + '/lobby',
-      type: 'GET',
-      contentType: 'application/json',
-      success: function(rooms) {
-        console.log('successful get');
-        callback(JSON.parse(rooms).data);
-      },
-      error: function(err) {
-        console.log(baseUrl + '/lobby')
-        console.log('Fetch to server got cucked');
-      }
+    return $http({
+      method: 'GET',
+      url: '/lobby'
+      // data: username
+    })
+    .then(function (rooms) {
+      callback(rooms);
     });
   }
 
