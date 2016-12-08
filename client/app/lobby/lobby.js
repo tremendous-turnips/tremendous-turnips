@@ -18,9 +18,15 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
     ]
   };
 
-  // getUsers = function() {
-    //Lobby.get
-  //}
+  $scope.fetchRooms = function() {
+    var thisScope = $scope;
+    Lobby.fetchRooms(function(rooms) {
+      thisScope.allRooms.rooms = rooms;
+      console.log(rooms);
+    });
+  }
+
+  $scope.fetchRooms();
 
   $scope.insertUser = function(index, user) {
     console.log('in insertUser');

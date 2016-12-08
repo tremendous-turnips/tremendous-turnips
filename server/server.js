@@ -14,7 +14,7 @@ app.get('/', function(req, res) {
 
 app.get('/lobby', function(req, res) {
   // get chatroom data from database and serve to client
-  res.send('placeholder for db fetch');
+  res.send(JSON.stringify({data: 'placeholder for db fetch'}));
   // NEED TO REQUIRE DB CONNECTION >>>>>>>>>>>>>>>>>>>>>>>>   
   // db.Chatroom.findAll()
   //   .then(function(rooms) {
