@@ -34,12 +34,12 @@ io.on('connection', function (socket) {
 app.use(express.static('socket.io'));
 ////////////////////////////////////////////////////////////////////////////////
 
-server.listen(port, function() {
 app.post('/users', function(req, res) {
   console.log('GOT USER', req.body.username);
   res.status('200').json(req.body);
 });
 
-app.listen(port, function() {
-  console.log('Server running on port', port);
-});
+server.listen(port, function() {});
+// app.listen(port, function() {
+//   console.log('Server running on port', port);
+// });
