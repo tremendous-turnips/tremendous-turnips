@@ -7,21 +7,35 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
   $scope.allRooms = {
     rooms: [
       {
-        username1: '_____',
-        username2: '_____',
-        topic: 'DONALDERINO'
+        firstUser: '_____',
+        secondUser: '_____',
+        roomName: 'DONALDERINO'
       }, {
-        username1: '_____',
-        username2: '_____',
-        topic: 'somethingelse'
+        firstUser: '_____',
+        secondUser: '_____',
+        roomName: 'somethingelse'
       } 
     ]
   };
 
+  $scope.exampleRoomData = {
+  rooms: [
+    {
+      firstUser: '_____',
+      secondUser: '_____',
+      roomName: 'DONALDERINO'
+    }, {
+      firstUser: '_____',
+      secondUser: '_____',
+      roomName: 'somethingelse'
+    } 
+  ]
+};
+
   $scope.fetchRooms = function() {
     var thisScope = $scope;
     Lobby.fetchRooms(function(rooms) {
-      thisScope.allRooms.rooms = rooms;
+      thisScope.allRooms.rooms = $scope.exampleRoomData.rooms;
       console.log(rooms);
     });
   }
