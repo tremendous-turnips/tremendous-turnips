@@ -28,6 +28,46 @@ app.get('/lobby', function(req, res) {
   })
 });
 
+app.put('/lobby', function(req, res) {
+  db.Chatroom.find({ where: { roomName: req.body.chatroomName } })
+  .then(function(room) {
+    if (room) {
+      if (req.body.user === 1) {
+        room.updateAttributes({
+          firstUser: req.body.username,
+        })
+
+      } else {
+        room.updateAttributes({
+          secondUser: req.body.username
+        })        
+      }
+      // .success(function () {
+      //    console.log('Successfully posted new username into db chatrooms')
+      // })
+    } else {
+      res.send('Error on updating given chatroom name');
+    }
+  })
+  .then(function(room) {
+    console.log('Successfully posted new username into db chatrooms');
+    res.send(room);
+  })
+
+  // .on('success', function (room) {
+  //   // Check if record exists in db
+  //   if (room) {
+  //     room.updateAttributes({
+  //       firstUser: 'Firstie',
+  //       secondUser: 'Secondie'
+  //     })
+  //     .success(function () {
+  //       console.log('Successfully posted new username into db chatrooms')
+  //     })
+  //   }
+  // })
+});
+
 ////////////////////////////////////////////////////////////////////////////////
 // SOCKET.IO
 ////////////////////////////////////////////////////////////////////////////////

@@ -51,10 +51,26 @@ services.factory('Lobby', function($location, $http) {
     });
   }
 
+  var insertUser = function(username, user, roomName, cb) {
+    return $http({
+      method: 'PUT',
+      url: '/lobby',
+      data: JSON.stringify({
+        chatroomName: roomName,
+        username: username,
+        user: user
+      })
+    })
+    .then(function (updatedRoom) {
+      cb(updatedRoom);
+    });
+  };
+
   return {
     validateUser: validateUser,
     fetchRooms: fetchRooms,
-    logoutUser: logoutUser
+    logoutUser: logoutUser,
+    insertUser: insertUser
   };
 });
 

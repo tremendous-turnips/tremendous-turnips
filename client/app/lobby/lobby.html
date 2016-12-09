@@ -6,8 +6,8 @@
 
 <div class='roomContainer'>
   <div class='room' ng-repeat='room in allRooms.rooms track by $index'>
-    <span ng-click='insertUser($index, 1)'> {{room.firstUser}}</span>
+    <span ng-click='insertUser($index, 1, room.roomName)'> {{room.firstUser}}</span>
     <span> {{room.roomName}}</span>
-    <span ng-click='insertUser($index, 2)'> {{room.secondUser}}</span>
+    <span ng-click='insertUser($index, 2, room.roomName)'> {{room.secondUser}}</span>
   </div>
 </div>
