@@ -88,8 +88,24 @@ services.factory('Chatroom', function($http) {
 
   var currRoom = '';
 
+  var postMessage = function(message, user, chatRoom) {
+    return $http({
+      method: 'POST',
+      url: '/messages',
+      data: JSON.stringify({
+        text: message,
+        user: user,
+        chatRoom: chatRoom
+      })
+    })
+    .then(function() {
+      console.log('SUCCESSFULLY POSTED MESSAGE OUT');
+    });
+  }
+
   return {
     validateUser: validateUser,
+    postMessage: postMessage,
     currRoom: currRoom
   };
 });

@@ -36,11 +36,10 @@ app.put('/lobby', function(req, res) {
         room.updateAttributes({
           firstUser: req.body.username,
         })
-
       } else {
         room.updateAttributes({
           secondUser: req.body.username
-        })        
+        })
       }
       // .success(function () {
       //    console.log('Successfully posted new username into db chatrooms')
@@ -68,16 +67,32 @@ app.put('/lobby', function(req, res) {
   // })
 });
 
+// ROUTE TO DO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+app.post('/messages', function(req, res) {
+  console.log(req.body);
+  db.Message.create({
+    text: req.body.text,
+    user: req.body.user,
+    chatRoom: req.body.chatRoom
+  })
+  .then(function() {
+    console.log('POSTED TEXT', req.body.text);
+    res.send('Some random message: posted to messages route');
+  })
+})
+
 ////////////////////////////////////////////////////////////////////////////////
 // SOCKET.IO
 ////////////////////////////////////////////////////////////////////////////////
 var chatroom1 = io.of('/chatroom');
 
 chatroom1.on('connection', function(socket) {
-  socket.on('chat message', function(msg) {
-    socket.broadcast.emit('posted message', msg);
+  socket.on('chat message', function(username, message, chatroom) {
+    
+    socket.broadcast.emit('posted message', username + ': ' + message);
   });
 });
+app.use(express.static('socket.io'));
 ////////////////////////////////////////////////////////////////////////////////
 
 app.post('/users', function(req, res) {
