@@ -30,10 +30,15 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
 
       $scope.fetchRooms();
 
-      $scope.insertUser = function(index, user) {
-        console.log('in insertUser');
-        $scope.allRooms.rooms[index]['username' + user] = $scope.myuser;
-        $location.path('/chatroom');
+      $scope.insertUser = function(index, user, roomName) {
+        console.log(roomName, '.....roomName', typeof roomName);
+        // $scope.allRooms.rooms[index]['username' + user] = $scope.myuser;
+
+        Lobby.insertUser($scope.myuser, user, roomName, function(updated) {
+          console.log(updated);
+          $location.path('/chatroom');
+        });
+
         //Lobby.post
         //Lobby.get
       };
