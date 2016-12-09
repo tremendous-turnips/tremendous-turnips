@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, {
   host: 'localhost',
-  dialect: 'mysql' 
+  dialect: 'mysql'
 });
 
 // var User = sequelize.define('users', {
@@ -23,7 +23,7 @@ var Message = sequelize.define('messages', {
   chatroom: {type: Sequelize.STRING}
 });
 
-// Message.belongsTo(User); 
+// Message.belongsTo(User);
 // Message.belongsTo(Chatroom);
 // User.belongsTo(Chatroom);
 // Chatroom.belongsTo(User, {as: 'firstUser'});
@@ -46,36 +46,36 @@ var Message = sequelize.define('messages', {
 // });
 
 Chatroom.sync({force: false}).then(function () {
-  // Chatroom.create({
-  //   roomName: 'Hillary v Donald',
-  //   status: 'closed',
-  //   firstUser: '_____',
-  //   secondUser: '_____'
-  // });
-  // Chatroom.create({
-  //   roomName: 'Emacs v Vim',
-  //   status: 'closed',
-  //   firstUser: '_____',
-  //   secondUser: '_____'
-  // });
-  // Chatroom.create({
-  //   roomName: 'McDonalds v Burger King',
-  //   status: 'closed',
-  //   firstUser: '_____',
-  //   secondUser: '_____'
-  // });
-  // Chatroom.create({
-  //   roomName: 'Coke v Pepsi',
-  //   status: 'closed',
-  //   firstUser: '_____',
-  //   secondUser: '_____'
-  // });
-  // Chatroom.create({
-  //   roomName: 'Blue v Black',
-  //   status: 'closed',
-  //   firstUser: '_____',
-  //   secondUser: '_____'
-  // });
+  Chatroom.create({
+    roomName: 'Hillary v Donald',
+    status: 'closed',
+    firstUser: '_____',
+    secondUser: '_____'
+  });
+  Chatroom.create({
+    roomName: 'Emacs v Vim',
+    status: 'closed',
+    firstUser: '_____',
+    secondUser: '_____'
+  });
+  Chatroom.create({
+    roomName: 'McDonalds v Burger King',
+    status: 'closed',
+    firstUser: '_____',
+    secondUser: '_____'
+  });
+  Chatroom.create({
+    roomName: 'Coke v Pepsi',
+    status: 'closed',
+    firstUser: '_____',
+    secondUser: '_____'
+  });
+  Chatroom.create({
+    roomName: 'Blue v Black',
+    status: 'closed',
+    firstUser: '_____',
+    secondUser: '_____'
+  });
 });
 
 Message.sync({force: false}).then(function () {
