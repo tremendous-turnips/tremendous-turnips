@@ -66,6 +66,7 @@ services.factory('Lobby', function($location, $http) {
     });
   };
 
+
   return {
     validateUser: validateUser,
     fetchRooms: fetchRooms,
@@ -85,9 +86,11 @@ services.factory('Chatroom', function($http) {
     })
   }
 
+  var currRoom = '';
 
   return {
-    validateUser: validateUser
+    validateUser: validateUser,
+    currRoom: currRoom
   };
 });
 

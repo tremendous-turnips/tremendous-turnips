@@ -1,7 +1,7 @@
 var lobby = angular.module('argue.lobby', []);
 
 
-lobby.controller('lobbyController', function($scope, $location, Lobby) {
+lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom) {
   Lobby.validateUser(function(result) {
     $scope.myuser = result.data;
   }).then(function() {
@@ -36,6 +36,7 @@ lobby.controller('lobbyController', function($scope, $location, Lobby) {
 
         Lobby.insertUser($scope.myuser, user, roomName, function(updated) {
           console.log(updated);
+          Chatroom.currRoom = roomName;
           $location.path('/chatroom');
         });
 
