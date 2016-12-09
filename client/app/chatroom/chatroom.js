@@ -18,6 +18,9 @@ chatroom.controller('chatroomController', function($scope, $location, Chatroom) 
     $scope.myuser = result.data;
   }).then(function() {
     if ($scope.myuser !== '') {
+
+      $scope.roomName = Chatroom.currRoom;
+
       $scope.leaveRoom = function() {
         $location.path('/lobby');
       }
