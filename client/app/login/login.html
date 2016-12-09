@@ -1,10 +1,12 @@
-<div>
-  <h1>Login</h1>
-  <h3>Please enter a username</h3>
-</div>
-<div>
+<div class="login">
   <form ng-submit='submitUsername()'>
-    <input placeholder="Enter username" ng-model='username' />
-    <button> Submit </button>
+    <div class="form-group">
+      <div class="login-username">
+      <input class="form-control login-input" placeholder="Enter a username" ng-model='username' />
+      </div>
+      <div class="submit-button-container">
+      <button type="submit" class="btn btn-info submit-button"> Submit </button>
+      </div>
+    </div>
   </form>
 </div>

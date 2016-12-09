@@ -1,0 +1,28 @@
+#app-title {
+  text-align: center;
+}
+
+.login {
+  text-align: center !important;
+  margin: auto;
+  vertical-align: middle;
+  padding-top: 10%;
+}
+
+.login-input {
+  width: 30% !important;
+  text-align: center !important;
+  margin: auto !important;
+}
+
+.login-username {
+}
+
+.submit-button-container {
+  padding-top: 10px !important;
+  margin: auto;
+}
+
+.submit-button {
+  width: 30%;
+}
