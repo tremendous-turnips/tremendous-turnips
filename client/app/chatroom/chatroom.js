@@ -13,7 +13,7 @@ socket.on('posted message', function(msg){
 ///////////////////////////////////////////////////////////
 // Chatroom Controller
 ///////////////////////////////////////////////////////////
-chatroom.controller('chatroomController', function($scope, $location, Chatroom) {
+chatroom.controller('chatroomController', function($scope, $location, $http, Chatroom) {
   Chatroom.validateUser(function(result) {
     $scope.myuser = result.data;
   }).then(function() {
@@ -21,13 +21,16 @@ chatroom.controller('chatroomController', function($scope, $location, Chatroom) 
       $scope.roomName = Chatroom.currRoom;
       console.log('this is roomname', $scope.roomName);
       $scope.leaveRoom = function() {
-        $location.path('/lobby');
+        $location.path('/token');
       }
 
       $scope.postMessage = function() {
         // submit a post request to the server to send the message
         var concatMessage = $scope.myuser + ': ' +$scope.userMessage
-        socket.emit('chat message', concatMessage); // This is a socket, not post request
+        socket.emit('chat message', $scope.myuser, $scope.userMessage); // This is a socket, not post request
+
+        // Post requst to server to write to messages table
+        Chatroom.postMessage($scope.userMessage, $scope.myuser, 'testChatroom');
 
         // Clear message text box
         $('.messageList').append($('<li>').text(concatMessage));
