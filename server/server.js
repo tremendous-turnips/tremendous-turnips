@@ -36,11 +36,10 @@ app.put('/lobby', function(req, res) {
         room.updateAttributes({
           firstUser: req.body.username,
         })
-
       } else {
         room.updateAttributes({
           secondUser: req.body.username
-        })        
+        })
       }
       // .success(function () {
       //    console.log('Successfully posted new username into db chatrooms')
