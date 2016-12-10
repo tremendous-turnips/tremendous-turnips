@@ -23,6 +23,10 @@
   overflow: scroll;
 }
 
+.userIsTyping {
+  font-size: 14pt;
+}
+
 .messageList {
   list-style-type: none;
   font-size: 14pt;

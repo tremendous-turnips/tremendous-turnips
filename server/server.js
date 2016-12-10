@@ -88,9 +88,12 @@ var chatroom1 = io.of('/chatroom');
 
 chatroom1.on('connection', function(socket) {
   socket.on('chat message', function(username, message, chatroom) {
-    
     socket.broadcast.emit('posted message', username + ': ' + message);
   });
+
+  socket.on('typing', function(username, msg) {
+    socket.broadcast.emit('typing message', username, msg);
+  })
 });
 app.use(express.static('socket.io'));
 ////////////////////////////////////////////////////////////////////////////////
