@@ -2,15 +2,7 @@ var chatroom = angular.module('argue.chatroom', [
   'luegg.directives' // scroll-glue directive: https://github.com/Luegg/angularjs-scroll-glue
 ]);
 
-///////////////////////////////////////////////////////////
-// Socket.io event listeners
-///////////////////////////////////////////////////////////
-
 var socket = io('/chatroom');
-// Listens for a new message from the server
-socket.on('posted message', function(msg){
-  $('.messageList').append($('<li>').text(msg));
-});
 
 ///////////////////////////////////////////////////////////
 // Chatroom Controller
@@ -25,6 +17,32 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
 
       // Set focus to input text field so user doesn't need to click on it to type
       $('.messageTextBox').focus();
+
+      // Set default oppenent is typing message to not show
+      $('.userIsTyping').hide();
+
+      ///////////////////////////////////////////////////////////
+      // Socket.io event listeners
+      ///////////////////////////////////////////////////////////
+      // Listens for a new message from the server
+      socket.on('posted message', function(msg){
+        $('.messageList').append($('<li>').text(msg));
+      });
+
+      // Listens for another user is typing
+      socket.on('typing message', function(username, msg) {
+        // var opponentTyping = username + ' is typing...'; // Better UI
+        var opponentTyping = username + ': ' + msg; // SHOWS FULL CAPACITY OF WEB SOCKETS!!!
+        var element = '<div class="userIsTyping">' + opponentTyping + '</div>';
+
+        $('.userIsTyping').replaceWith(element);
+        $('.userIsTyping').show();
+
+        setTimeout(function() {
+          $('.userIsTyping').hide();
+        }, 1000);
+      });
+      ///////////////////////////////////////////////////////////
 
       $scope.leaveRoom = function() {
         $location.path('/token');
@@ -43,8 +61,8 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         $('.messageTextBox').val('');
       };
 
-      $scope.sendMessage = function() {
-        socket.emit('typingMessage', $scope.userMessage);
+      $scope.showTyping = function() {
+        socket.emit('typing', $scope.myuser, $scope.userMessage);
       };
     } else {
       $location.path('/login');
