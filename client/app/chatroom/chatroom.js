@@ -25,7 +25,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       }
 
       $scope.postMessage = function() {
-        // submit a post request to the server to send the message
+        // Emit a socket event to send the message with the username and text
         var concatMessage = $scope.myuser + ': ' +$scope.userMessage
         socket.emit('chat message', $scope.myuser, $scope.userMessage); // This is a socket, not post request
 

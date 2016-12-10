@@ -3,11 +3,16 @@
 </div>
 <div>
   <ul class="messageList"></ul>
-  <form name="userResponseForm" ng-submit="postMessage()">
-    <input class="messageTextBox" placeholder="Go forth and debate..." ng-model="userMessage" ng-keyup="displayMessage()" >
-    <button> Send </button>
+  <form class="userResponseForm" name="userResponseForm" ng-submit="postMessage()">
+    <div class="input-group">
+      <input class="messageTextBox form-control" placeholder="Go forth and debate..."
+             ng-model="userMessage" ng-keyup="displayMessage()" />
+      <span class="input-group-btn">
+        <button class="btn btn-info">Send</button>
+        <button class="btn btn-danger" ng-click='leaveRoom()'> Leave </button>
+      </span>
+    </div>
+    <span>
+    </span>
   </form>
-  <div>
-    <button ng-click='leaveRoom()'> Leave </button>
-  </div>
 </div>
