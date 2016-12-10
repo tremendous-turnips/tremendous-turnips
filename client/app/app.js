@@ -26,6 +26,3 @@ angular.module('argue', [
     })
     .otherwise({redirectTo: '/login'});
   });
-
-
-

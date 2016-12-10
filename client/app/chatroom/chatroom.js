@@ -1,4 +1,6 @@
-var chatroom = angular.module('argue.chatroom', []);
+var chatroom = angular.module('argue.chatroom', [
+  'luegg.directives' // scroll-glue directive: https://github.com/Luegg/angularjs-scroll-glue
+]);
 
 ///////////////////////////////////////////////////////////
 // Socket.io event listeners
@@ -20,12 +22,16 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
     if ($scope.myuser !== '') {
       $scope.roomName = Chatroom.currRoom;
       console.log('this is roomname', $scope.roomName);
+
+      // Set focus to input text field so user doesn't need to click on it to type
+      $('.messageTextBox').focus();
+
       $scope.leaveRoom = function() {
         $location.path('/token');
-      }
+      };
 
       $scope.postMessage = function() {
-        // submit a post request to the server to send the message
+        // Emit a socket event to send the message with the username and text
         var concatMessage = $scope.myuser + ': ' +$scope.userMessage
         socket.emit('chat message', $scope.myuser, $scope.userMessage); // This is a socket, not post request
 
@@ -39,7 +45,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
 
       $scope.sendMessage = function() {
         socket.emit('typingMessage', $scope.userMessage);
-      }
+      };
     } else {
       $location.path('/login');
     }
