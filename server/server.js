@@ -73,7 +73,7 @@ app.post('/messages', function(req, res) {
   db.Message.create({
     text: req.body.text,
     user: req.body.user,
-    chatRoom: req.body.chatRoom
+    chatroom: req.body.chatRoom
   })
   .then(function() {
     console.log('POSTED TEXT', req.body.text);
