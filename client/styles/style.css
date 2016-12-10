@@ -18,6 +18,16 @@
 .login-username {
 }
 
+.messageList-container {
+  height: 350px;
+  overflow: scroll;
+}
+
+.messageList {
+  list-style-type: none;
+  font-size: 14pt;
+}
+
 .userResponseForm {
   padding: 20px;
   position: fixed;

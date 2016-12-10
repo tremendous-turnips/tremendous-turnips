@@ -2,7 +2,9 @@
   <h1> {{roomName}}</h1>
 </div>
 <div>
-  <ul class="messageList"></ul>
+  <div class="messageList-container" scroll-glue>
+    <ul class="messageList"></ul>
+  </div>
   <form class="userResponseForm" name="userResponseForm" ng-submit="postMessage()">
     <div class="input-group">
       <input class="messageTextBox form-control" placeholder="Go forth and debate..."
