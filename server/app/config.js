@@ -13,7 +13,9 @@ var Chatroom = sequelize.define('chatrooms', {
 var Message = sequelize.define('messages', {
   text: {type: Sequelize.STRING,field: 'text'},
   user: {type: Sequelize.STRING},
-  chatroom: {type: Sequelize.STRING}
+  opponent: {type: Sequelize.STRING},
+  chatroom: {type: Sequelize.STRING},
+  session: {type: Sequelize.STRING}
 });
 
 var User = sequelize.define('users', {
@@ -56,32 +58,44 @@ Message.sync({force: true}).then(function () {
   Message.create({
     text: 'Hi!',
     user: 'James',
-    chatroom: 'Hillary v Donald'
+    opponent: 'Matt',
+    chatroom: 'Hillary v Donald',
+    session: '12345'
   });
   Message.create({
     text: 'Hey!',
     user: 'Matt',
-    chatroom: 'Hillary v Donald'
+    opponent: 'James',
+    chatroom: 'Hillary v Donald',
+    session: '12345'
   });
   Message.create({
     text: 'How are you?',
     user: 'James',
-    chatroom: 'Hillary v Donald'
+    opponent: 'Matt',
+    chatroom: 'Hillary v Donald',
+    session: '12345'
   });
   Message.create({
     text: 'Good. How about you?',
-    user: 'James',
-    chatroom: 'Hillary v Donald'
+    user: 'Matt',
+    opponent: 'James',
+    chatroom: 'Hillary v Donald',
+    session: '12345'
   });
   Message.create({
-    text: 'Do you like Trump?',
+    text: 'No complaints. Do you like Trump?',
     user: 'James',
-    chatroom: 'Hillary v Donald'
+    opponent: 'Matt',
+    chatroom: 'Hillary v Donald',
+    session: '12345'
   });
   Message.create({
     text: 'Not really.',
-    user: 'James',
-    chatroom: 'Hillary v Donald'
+    user: 'Matt',
+    opponent: 'James',
+    chatroom: 'Hillary v Donald',
+    session: '12345'
   });
 });
 
