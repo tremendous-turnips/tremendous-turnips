@@ -10,7 +10,6 @@ var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, {
 // });
 
 var Chatroom = sequelize.define('chatrooms', {
-  hash: {type: Sequelize.STRING, field: 'hash'},
   roomName: {type: Sequelize.STRING, field: 'room_name'},
   firstUser: {type: Sequelize.STRING, field: 'first_user'},
   secondUser: {type: Sequelize.STRING, field: 'second_user'},
@@ -45,7 +44,7 @@ var Message = sequelize.define('messages', {
 //   // });
 // });
 
-Chatroom.sync({force: false}).then(function () {
+Chatroom.sync({force: true}).then(function () {
   Chatroom.create({
     roomName: 'Hillary v Donald',
     status: 'closed',
