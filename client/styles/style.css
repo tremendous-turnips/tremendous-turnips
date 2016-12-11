@@ -16,7 +16,6 @@
 }
 
 .login-username {
-
 }
 
 .messageList-container {
@@ -31,6 +30,11 @@
 .messageList {
   list-style-type: none;
   font-size: 14pt;
+}
+
+.chatNotifications {
+  color: grey;
+  font-size: 10pt;
 }
 
 .userResponseForm {
