@@ -31,13 +31,13 @@ services.factory('Lobby', function($location, $http) {
     })
   }
 
-  var fetchRooms = function(callback) {
+  var fetchRooms = function(cb) {
     return $http({
       method: 'GET',
       url: '/lobby'
     })
     .then(function (rooms) {
-      callback(rooms);
+      cb(rooms);
     });
   }
 
@@ -104,10 +104,20 @@ services.factory('Chatroom', function($http) {
     });
   }
 
+  var leaveChatroom = function() {
+    return $http({
+      method: 'POST',
+      url: '/leavechatroom'
+    })
+    .then(function() {
+      console.log('Successfully left chatroom');
+    });
+  };
+
   return {
     validateUser: validateUser,
     postMessage: postMessage,
-    currRoom: currRoom
+    leaveChatroom: leaveChatroom
   };
 });
 

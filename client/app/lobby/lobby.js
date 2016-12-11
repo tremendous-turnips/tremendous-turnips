@@ -11,9 +11,8 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
       };
 
       $scope.fetchRooms = function() {
-        var thisScope = $scope;
         Lobby.fetchRooms(function(rooms) {
-          thisScope.allRooms.rooms = rooms.data;
+          $scope.allRooms.rooms = rooms.data;
           console.log(rooms, 'inside fetchrooms in lobby controller');
         });
       }
@@ -22,16 +21,12 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
 
       $scope.insertUser = function(index, user, roomName) {
         console.log(roomName, '.....roomName', typeof roomName);
-        // $scope.allRooms.rooms[index]['username' + user] = $scope.myuser;
 
         Lobby.insertUser($scope.myuser, user, roomName, function(updated) {
           console.log(updated);
           Chatroom.currRoom = roomName;
           $location.path('/chatroom');
         });
-
-        //Lobby.post
-        //Lobby.get
       };
 
       $scope.redirectToToken = function(path) {
@@ -39,7 +34,7 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
       }
 
       $scope.logout = function(path) {
-        // DESTROY SESSION >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        // Destroy session
         Lobby.logoutUser();
         $location.path('/login')
       }

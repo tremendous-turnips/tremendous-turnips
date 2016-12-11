@@ -32,6 +32,11 @@ app.put('/lobby', function(req, res) {
   db.Chatroom.find({ where: { roomName: req.body.chatroomName } })
   .then(function(room) {
     if (room) {
+      // Set session variables to be able to delete name after leaving / logging out
+      req.session.user = req.body.user;
+      req.session.chatroomName = req.body.chatroomName;
+
+      // Update chatroom depending on if entering as user 1 or user 2
       if (req.body.user === 1) {
         room.updateAttributes({
           firstUser: req.body.username,
@@ -41,9 +46,6 @@ app.put('/lobby', function(req, res) {
           secondUser: req.body.username
         })
       }
-      // .success(function () {
-      //    console.log('Successfully posted new username into db chatrooms')
-      // })
     } else {
       res.send('Error on updating given chatroom name');
     }
@@ -52,19 +54,6 @@ app.put('/lobby', function(req, res) {
     console.log('Successfully posted new username into db chatrooms');
     res.send(room);
   })
-
-  // .on('success', function (room) {
-  //   // Check if record exists in db
-  //   if (room) {
-  //     room.updateAttributes({
-  //       firstUser: 'Firstie',
-  //       secondUser: 'Secondie'
-  //     })
-  //     .success(function () {
-  //       console.log('Successfully posted new username into db chatrooms')
-  //     })
-  //   }
-  // })
 });
 
 // ROUTE TO DO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -113,11 +102,36 @@ app.post('/users', function(req, res) {
 app.get('/validLogin', function(req, res) {
   res.status('200').send(req.session.username);
 })
+
 app.post('/logout', function(req, res) {
   req.session.destroy (function() {
     res.status(200).send('destroyed');
   });
 })
+
+app.post('/leavechatroom', function(req, res) {
+  // Remove user from chatroom when leaving
+  db.Chatroom.find({ where: { roomName: req.session.chatroomName } })
+  .then(function(room) {
+    if (room) {
+      if (req.session.user === 1) {
+        room.updateAttributes({
+          firstUser: null,
+        })
+      } else {
+        room.updateAttributes({
+          secondUser: null
+        })
+      }
+    } else {
+      res.send('Error on updating given chatroom users');
+    }
+  })
+  .then(function(room) {
+    console.log('Successfully removed username from db chatroom');
+    res.send(room);
+  })
+});
 
 console.log('Server running on port', port);
 server.listen(port, function() {});
