@@ -24,6 +24,15 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       ///////////////////////////////////////////////////////////
       // Socket.io event listeners
       ///////////////////////////////////////////////////////////
+      // Listen for when opponent enters the room
+      socket.on('opponent enter', function(username){
+        $('.messageList').append($('<li>').text(username + ' has entered the room.'));
+        Chatroom.opponent = username;
+      });
+      socket.on('opponent leave', function(username){
+        $('.messageList').append($('<li>').text(username + ' has left the room.'));
+        Chatroom.opponent = '';
+      });
       // Listens for a new message from the server
       socket.on('posted message', function(msg){
         $('.messageList').append($('<li>').text(msg));
@@ -32,6 +41,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       // Listens for another user is typing
       socket.on('typing message', function(username, msg) {
         // var opponentTyping = username + ' is typing...'; // Better UI
+        $scope.opponent = username;
         var opponentTyping = username + ': ' + msg; // SHOWS FULL CAPACITY OF WEB SOCKETS!!!
         var element = '<div class="userIsTyping">' + opponentTyping + '</div>';
 
@@ -43,9 +53,14 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         }, 1000);
       });
       ///////////////////////////////////////////////////////////
+      $scope.enterRoom = function() {
+        socket.emit('enter', $scope.myuser);
+      };
+      $scope.enterRoom();
 
       $scope.leaveRoom = function() {
         $location.path('/token');
+        socket.emit('leave', $scope.myuser);
       };
 
       $scope.postMessage = function() {

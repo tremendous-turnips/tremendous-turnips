@@ -87,6 +87,7 @@ services.factory('Chatroom', function($http) {
   }
 
   var currRoom = '';
+  var opponent = '';
 
   var postMessage = function(message, user, chatRoom) {
     return $http({
