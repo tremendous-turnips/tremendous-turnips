@@ -87,6 +87,12 @@ app.post('/messages', function(req, res) {
 var chatroom1 = io.of('/chatroom');
 
 chatroom1.on('connection', function(socket) {
+  socket.on('enter', function(username) {
+    socket.broadcast.emit('opponent enter', username);
+  });
+  socket.on('leave', function(username) {
+    socket.broadcast.emit('opponent leave', username);
+  });
   socket.on('chat message', function(username, message, chatroom) {
     socket.broadcast.emit('posted message', username + ': ' + message);
   });
