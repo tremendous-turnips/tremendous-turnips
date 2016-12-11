@@ -60,14 +60,20 @@
 }
 
 .sideTableLeft {
-  width: 10%;
-  /*float: left;*/
   text-align: center;
 }
 
 .sideTableRight {
-  width: 10%;
-  height: 0%;
-  /*float: right;*/
   text-align: center;
+}
+
+.middleTableElement {
+  width: 70%;
+}
+
+tr {
+  /*border: solid ;*/
+}
+
+.room {
 }
