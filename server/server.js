@@ -73,6 +73,10 @@ app.post('/messages', function(req, res) {
 ////////////////////////////////////////////////////////////////////////////////
 // SOCKET.IO
 ////////////////////////////////////////////////////////////////////////////////
+
+// =============================================================================
+// CHATROOM SOCKET
+// =============================================================================
 var chatroom1 = io.of('/chatroom');
 
 chatroom1.on('connection', function(socket) {
@@ -85,11 +89,25 @@ chatroom1.on('connection', function(socket) {
   socket.on('chat message', function(username, message, chatroom) {
     socket.broadcast.emit('posted message', username + ': ' + message);
   });
-
   socket.on('typing', function(username, msg) {
     socket.broadcast.emit('typing message', username, msg);
   })
 });
+
+// =============================================================================
+// LOBBY SOCKET
+// =============================================================================
+var lobby1 = io.of('/lobby');
+
+lobby1.on('connection', function(socket) {
+  // For live updates when another user enters a chatroom
+  socket.on('user enters room', function(username, user, roomName) {
+    socket.broadcast.emit('other user enters room', username, user, roomName);
+  });
+
+})
+
+
 app.use(express.static('socket.io'));
 ////////////////////////////////////////////////////////////////////////////////
 

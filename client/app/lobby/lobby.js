@@ -1,6 +1,9 @@
 var lobby = angular.module('argue.lobby', []);
+var socket = io('/lobby');
 
-
+///////////////////////////////////////////////////////////
+// Lobby Controller
+///////////////////////////////////////////////////////////
 lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom) {
   Lobby.validateUser(function(result) {
     $scope.myuser = result.data;
@@ -13,14 +16,22 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
       $scope.fetchRooms = function() {
         Lobby.fetchRooms(function(rooms) {
           $scope.allRooms.rooms = rooms.data;
-          console.log(rooms, 'inside fetchrooms in lobby controller');
         });
       }
 
       $scope.fetchRooms();
 
+      ///////////////////////////////////////////////////////////
+      // Socket.io event listeners
+      ///////////////////////////////////////////////////////////
+      // Listen for when someone enters a room
+      socket.on('other user enters room', function(username, user, roomName){
+        $scope.fetchRooms();
+      });
+      ///////////////////////////////////////////////////////////
+
       $scope.insertUser = function(index, user, roomName) {
-        console.log(roomName, '.....roomName', typeof roomName);
+        socket.emit('user enters room', $scope.myuser, user, roomName)
 
         Lobby.insertUser($scope.myuser, user, roomName, function(updated) {
           console.log(updated);
