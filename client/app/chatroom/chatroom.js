@@ -3,6 +3,7 @@ var chatroom = angular.module('argue.chatroom', [
 ]);
 
 var socket = io('/chatroom');
+var lobbySocket = io('/lobby');
 
 ///////////////////////////////////////////////////////////
 // Chatroom Controller
@@ -64,7 +65,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
 
       $scope.leaveRoom = function() {
         // Update db for user leaving chatroom
-        Chatroom.leaveChatroom();
+        Chatroom.leaveChatroom(lobbySocket.emit('user leaves room'));
 
         $location.path('/token');
         socket.emit('leave', $scope.myuser);

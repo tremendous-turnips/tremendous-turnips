@@ -104,7 +104,9 @@ lobby1.on('connection', function(socket) {
   socket.on('user enters room', function(username, user, roomName) {
     socket.broadcast.emit('other user enters room', username, user, roomName);
   });
-
+  socket.on('user leaves room', function(username, user, roomName) {
+    socket.broadcast.emit('other user leaves room', username);
+  });
 })
 
 
