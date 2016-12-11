@@ -1,5 +1,5 @@
 var lobby = angular.module('argue.lobby', []);
-var socket = io('/lobby');
+var lobbySocket = io('/lobby');
 
 ///////////////////////////////////////////////////////////
 // Lobby Controller
@@ -25,12 +25,12 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
       // Socket.io event listeners
       ///////////////////////////////////////////////////////////
       // Listen for when someone enters a room
-      socket.on('other user enters room', function(username, user, roomName){
+      lobbySocket.on('other user enters room', function(username, user, roomName){
         $scope.fetchRooms();
       });
 
       // Listen for when someone leaves a room
-      socket.on('other user leaves room', function(username){
+      lobbySocket.on('other user leaves room', function(username){
         $scope.fetchRooms();
       });      
       ///////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
 
         Lobby.insertUser($scope.myuser, user, roomName, function(updated) {
           console.log(updated);
-          socket.emit('user enters room', $scope.myuser, user, roomName)
+          lobbySocket.emit('user enters room', $scope.myuser, user, roomName)
           Chatroom.currRoom = roomName;
           $location.path('/chatroom');
         });
