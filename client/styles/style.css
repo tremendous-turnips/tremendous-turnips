@@ -16,6 +16,7 @@
 }
 
 .login-username {
+
 }
 
 .messageList-container {
@@ -45,4 +46,28 @@
 
 .submit-button {
   width: 30%;
+}
+
+.lobby-master-div {
+  text-align: center;
+
+}
+
+.roomContainer {
+  font-size: 22px;
+  text-align: center;
+  margin-top: 4%;
+}
+
+.sideTableLeft {
+  width: 10%;
+  /*float: left;*/
+  text-align: center;
+}
+
+.sideTableRight {
+  width: 10%;
+  height: 0%;
+  /*float: right;*/
+  text-align: center;
 }
