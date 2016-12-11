@@ -6,8 +6,10 @@
 
 <div class='roomContainer'>
   <div class='room' ng-repeat='room in allRooms.rooms track by $index'>
-    <span ng-click='insertUser($index, 1, room.roomName)'> {{room.firstUser}}</span>
+    <button type="button" class="btn btn-primary" class ng-show="!room.firstUser"ng-click='insertUser($index, 1, room.roomName)'> JOIN </button>
+    <span ng-show="room.secondUser"> {{room.firstUser}}</span>
     <span> {{room.roomName}}</span>
-    <span ng-click='insertUser($index, 2, room.roomName)'> {{room.secondUser}}</span>
+    <button type="button" class="btn btn-primary" ng-show="!room.secondUser" ng-click='insertUser($index, 2, room.roomName)'> JOIN </button>
+    <span ng-show="room.secondUser"> {{room.secondUser}}</span>
   </div>
 </div>
