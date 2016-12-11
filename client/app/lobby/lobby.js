@@ -7,17 +7,7 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
   }).then(function() {
     if ($scope.myuser !== '') {
       $scope.allRooms = {
-        rooms: [
-          {
-            username1: '_____',
-            username2: '_____',
-            topic: 'DONALDERINO'
-          }, {
-            username1: '_____',
-            username2: '_____',
-            topic: 'somethingelse'
-          }
-        ]
+        rooms: []
       };
 
       $scope.fetchRooms = function() {
