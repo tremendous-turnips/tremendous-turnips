@@ -1,15 +1,20 @@
-<div>
+<div class='lobby-master-div'>
   <h1> Lobby </h1>
-  <button ng-click='redirectToToken()'> Tokens </button>
-  <button ng-click='logout()'> Logout </button>
+  <button class='btn btn-warning' ng-click='redirectToToken()'> Tokens </button>
+  <button class='btn btn-warning' ng-click='logout()'> Logout </button>
 </div>
 
 <div class='roomContainer'>
-  <div class='room' ng-repeat='room in allRooms.rooms track by $index'>
-    <button type="button" class="btn btn-primary" class ng-show="!room.firstUser"ng-click='insertUser($index, 1, room.roomName)'> JOIN </button>
-    <span ng-show="room.secondUser"> {{room.firstUser}}</span>
-    <span> {{room.roomName}}</span>
-    <button type="button" class="btn btn-primary" ng-show="!room.secondUser" ng-click='insertUser($index, 2, room.roomName)'> JOIN </button>
-    <span ng-show="room.secondUser"> {{room.secondUser}}</span>
-  </div>
+  <table align='center'>
+    <tr class='room' ng-repeat='room in allRooms.rooms track by $index'>
+      <td class='sideTableLeft'> <button type="button" class="btn btn-primary lobbyButtonLeft" class ng-show="!room.firstUser" ng-click='insertUser($index, 1, room.roomName)'> JOIN </button>
+      <span ng-show="room.secondUser"> {{room.firstUser}}</span>
+      </td>
+      <td> <span> {{room.roomName}}</span> </td>
+      <td class='sideTableRight'>
+        <button type="button" class="btn btn-primary lobbyButtonRight" ng-show="!room.secondUser" ng-click='insertUser($index, 2, room.roomName)'> JOIN </button>
+        <span ng-show="room.secondUser"> {{room.secondUser}}</span>
+      </td>
+    </tr>
+  </table>
 </div>
