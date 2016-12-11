@@ -65,7 +65,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
 
       $scope.leaveRoom = function() {
         // Update db for user leaving chatroom
-        Chatroom.leaveChatroom(lobbySocket.emit('user leaves room'));
+        Chatroom.leaveChatroom(function() { lobbySocket.emit('user leaves room') });
 
         $location.path('/token');
         socket.emit('leave', $scope.myuser);
