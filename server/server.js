@@ -80,6 +80,7 @@ app.post('/messages', function(req, res) {
 var chatroom1 = io.of('/chatroom');
 
 chatroom1.on('connection', function(socket) {
+  console.log('chatroom socket open ===============================');
   socket.on('enter', function(username) {
     socket.broadcast.emit('opponent enter', username);
   });
@@ -100,6 +101,7 @@ chatroom1.on('connection', function(socket) {
 var lobby1 = io.of('/lobby');
 
 lobby1.on('connection', function(socket) {
+  console.log('lobby socket open ===============================');
   // For live updates when another user enters a chatroom
   socket.on('user enters room', function(username, user, roomName) {
     socket.broadcast.emit('other user enters room', username, user, roomName);
