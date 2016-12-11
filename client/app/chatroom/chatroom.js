@@ -26,11 +26,11 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       ///////////////////////////////////////////////////////////
       // Listen for when opponent enters the room
       socket.on('opponent enter', function(username){
-        $('.messageList').append($('<li>').text(username + ' has entered the room.'));
+        $('.messageList').append($('<li class="chatNotifications">').text(username + ' has entered the room.'));
         Chatroom.opponent = username;
       });
       socket.on('opponent leave', function(username){
-        $('.messageList').append($('<li>').text(username + ' has left the room.'));
+        $('.messageList').append($('<li class="chatNotifications">').text(username + ' has left the room.'));
         Chatroom.opponent = '';
       });
       // Listens for a new message from the server
@@ -43,14 +43,18 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         // var opponentTyping = username + ' is typing...'; // Better UI
         $scope.opponent = username;
         var opponentTyping = username + ': ' + msg; // SHOWS FULL CAPACITY OF WEB SOCKETS!!!
-        var element = '<div class="userIsTyping">' + opponentTyping + '</div>';
-
-        $('.userIsTyping').replaceWith(element);
-        $('.userIsTyping').show();
-
-        setTimeout(function() {
+        var element = '<div class="userIsTyping chatNotifications">' + opponentTyping + '</div>';
+        if (msg !== '') {
+          $('.userIsTyping').replaceWith(element);
+          $('.userIsTyping').show();
+        }
+        if (msg === '') {
           $('.userIsTyping').hide();
-        }, 1000);
+        }
+
+        // setTimeout(function() {
+        //   $('.userIsTyping').hide();
+        // }, 3000);
       });
       ///////////////////////////////////////////////////////////
       $scope.enterRoom = function() {
