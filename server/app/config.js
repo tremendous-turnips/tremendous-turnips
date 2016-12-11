@@ -16,11 +16,13 @@ var Message = sequelize.define('messages', {
   chatroom: {type: Sequelize.STRING}
 });
 
-// var User = sequelize.define('users', {
-//   username: {type: Sequelize.STRING, field: 'username'},
-//   image_url: {type: Sequelize.STRING,field: 'image_url'}
-// });
+var User = sequelize.define('users', {
+  username: {type: Sequelize.STRING, field: 'username', unique: true},
+  password: {type: Sequelize.STRING, field: 'password'},
+  imageUrl: {type: Sequelize.STRING,field: 'image_url'}
+});
 
+// Starter chatrooms
 Chatroom.sync({force: true}).then(function () {
   Chatroom.create({
     roomName: 'Hillary v Donald',
@@ -49,6 +51,7 @@ Chatroom.sync({force: true}).then(function () {
   });
 });
 
+// Dummy messages for testing
 Message.sync({force: true}).then(function () {
   Message.create({
     text: 'Hi!',
@@ -82,6 +85,30 @@ Message.sync({force: true}).then(function () {
   });
 });
 
+// Dummy users for testing
+User.sync({force: true}).then(function () {
+  User.create({
+    username: 'James',
+    password: 'james',
+    imageUrl: 'https://avatars2.githubusercontent.com/u/18106668?v=3&s=460'
+  });
+  User.create({
+    username: 'Evan',
+    password: 'evan',
+    imageUrl: 'https://avatars1.githubusercontent.com/u/20055140?v=3&s=460'
+  });
+  User.create({
+    username: 'David',
+    password: 'david',
+    imageUrl: 'https://avatars1.githubusercontent.com/u/10459856?v=3&s=460'
+  });
+  User.create({
+    username: 'Matt',
+    password: 'matt',
+    imageUrl: 'https://avatars1.githubusercontent.com/u/10934811?v=3&s=460'
+  });
+});
+
 module.exports.Chatroom = Chatroom;
 module.exports.Message = Message;
-// module.exports.User = User;
+module.exports.User = User;
