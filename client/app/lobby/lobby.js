@@ -24,6 +24,9 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
       ///////////////////////////////////////////////////////////
       // Socket.io event listeners
       ///////////////////////////////////////////////////////////
+      // Remove all listeners on socket
+      socket.removeAllListeners();
+
       // Listen for when someone enters a room
       lobbySocket.on('other user enters room', function(username, user, roomName){
         $scope.fetchRooms();

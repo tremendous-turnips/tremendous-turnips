@@ -25,6 +25,9 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       ///////////////////////////////////////////////////////////
       // Socket.io event listeners
       ///////////////////////////////////////////////////////////
+      // Remove all listeners on socket
+      socket.removeAllListeners();
+
       // Listen for when opponent enters the room
       socket.on('opponent enter', function(username){
         $('.messageList').append($('<li class="chatNotifications">').text(username + ' has entered the room.'));
