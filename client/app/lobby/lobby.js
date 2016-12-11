@@ -28,6 +28,11 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
       socket.on('other user enters room', function(username, user, roomName){
         $scope.fetchRooms();
       });
+
+      // Listen for when someone leaves a room
+      socket.on('other user leaves room', function(username){
+        $scope.fetchRooms();
+      });      
       ///////////////////////////////////////////////////////////
 
       $scope.insertUser = function(index, user, roomName) {

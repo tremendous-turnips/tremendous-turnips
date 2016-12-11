@@ -104,13 +104,16 @@ services.factory('Chatroom', function($http) {
     });
   }
 
-  var leaveChatroom = function() {
+  var leaveChatroom = function(cb) {
     return $http({
       method: 'POST',
       url: '/leavechatroom'
     })
     .then(function() {
       console.log('Successfully left chatroom');
+      if (cb) {
+        cb;
+      }
     });
   };
 
