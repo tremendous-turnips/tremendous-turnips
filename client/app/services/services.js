@@ -112,7 +112,7 @@ services.factory('Chatroom', function($http) {
     .then(function() {
       console.log('Successfully left chatroom');
       if (cb) {
-        cb;
+        cb();
       }
     });
   };
