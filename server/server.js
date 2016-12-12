@@ -99,9 +99,11 @@ chatroom1.on('connection', function(socket) {
     socket.leave(room);
   });
   socket.on('chat message', function(username, message, room) {
+    console.log('EMITTING TO...', room);
     socket.to(room).emit('posted message', username + ': ' + message);
   });
   socket.on('typing', function(username, msg, room) {
+    // console.log('EMITTING TO...', room);
     socket.to(room).emit('typing message', username, msg);
   });
 });
