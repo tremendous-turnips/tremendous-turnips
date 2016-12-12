@@ -89,14 +89,15 @@ services.factory('Chatroom', function($http) {
   var currRoom = '';
   var opponent = '';
 
-  var postMessage = function(message, user, chatRoom) {
+  var postMessage = function(message, user, opponent, chatRoom) {
     return $http({
       method: 'POST',
       url: '/messages',
       data: JSON.stringify({
         text: message,
         user: user,
-        chatRoom: chatRoom
+        chatRoom: chatRoom,
+        opponent: opponent
       })
     })
     .then(function() {
@@ -125,7 +126,7 @@ services.factory('Chatroom', function($http) {
 });
 
 services.factory('Token', function($http) {
-    var validateUser = function(cb) {
+  var validateUser = function(cb) {
     return $http({
       method: 'GET',
       url: '/validLogin'
@@ -134,7 +135,19 @@ services.factory('Token', function($http) {
       cb(result);
     })
   }
+
+  var grabAllBattles = function(cb) {
+    return $http({
+      method: 'GET',
+      url: '/token'
+    })
+    .then(function(result) {
+      cb(result);
+    });
+  }
+
   return {
-    validateUser: validateUser
+    validateUser: validateUser,
+    grabAllBattles: grabAllBattles
   };
 });

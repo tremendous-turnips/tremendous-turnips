@@ -80,7 +80,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         socket.emit('chat message', $scope.myuser, $scope.userMessage); // This is a socket, not post request
 
         // Post requst to server to write to messages table
-        Chatroom.postMessage($scope.userMessage, $scope.myuser, 'testChatroom');
+        Chatroom.postMessage($scope.userMessage, $scope.myuser, $scope.opponent, $scope.roomName);
 
         // Clear message text box
         $('.messageList').append($('<li>').text(concatMessage));

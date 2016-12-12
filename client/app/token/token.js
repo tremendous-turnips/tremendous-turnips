@@ -7,6 +7,13 @@ token.controller('tokenController', function($scope, $location, Token, Lobby, Ch
   }).then(function() {
     if ($scope.myuser !== '') {
 
+      $scope.data = {battles: []};
+
+      Token.grabAllBattles(function(result) {
+        $scope.data.battles = result.data;
+        console.log(result.data);
+      })
+
       $scope.leaveRoom = function() {
         $location.path('/lobby');
       };

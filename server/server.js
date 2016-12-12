@@ -11,11 +11,10 @@ var session = require('express-session');
 
 
 var port = process.env.PORT || 1337;
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({secret: 'COOKIE'}));
 app.use(express.static('client'));
-app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
   res.sendFile(path(__dirname,'client/index.html'));
@@ -58,11 +57,12 @@ app.put('/lobby', function(req, res) {
 
 // ROUTE TO DO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 app.post('/messages', function(req, res) {
-  console.log(req.body);
+  console.log(req.body.chatRoom);
   db.Message.create({
     text: req.body.text,
     user: req.body.user,
-    chatroom: req.body.chatRoom
+    chatroom: req.body.chatRoom,
+    opponent: req.body.opponent
   })
   .then(function() {
     console.log('POSTED TEXT', req.body.text);
@@ -154,6 +154,13 @@ app.post('/leavechatroom', function(req, res) {
     res.send(room);
   })
 });
+
+app.get('/token', function(req, res) {
+  db.Message.findAll({where: { user: req.session.username}})
+  .then(function(messages) {
+    res.send(messages);
+  })
+})
 
 console.log('Server running on port', port);
 server.listen(port, function() {});
