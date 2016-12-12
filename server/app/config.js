@@ -1,30 +1,16 @@
 var Sequelize = require('sequelize');
 
+var sequelize = new Sequelize('mysql://b5a7a9a0714f26:ed513952@us-cdbr-iron-east-04.cleardb.net/heroku_ffc37eb62708e4e?reconnect=true');
+/*
 if (process.env.CLEARDB_DATABASE_URL) { // FOR HEROKU DEPLOYMENT
-  var sequelize = require('sequelize-heroku').connect();
-
-  if (sequelize) {
-    sequelize.authenticate().then(function() {
-      var config = sequelize.connectionManager.config;
-      console.log('sequelize-heroku: Connected to '+config.host+' as '+config.username+'.');
-    }).catch( function(err) {
-        var config = sequelize.connectionManager.config;
-        console.log('Sequelize: Error connecting '+config.host+' as '+config.user+': '+err);
-    });
-  } else {
-    console.log('NO ENVIRONMENT VARIABLE FOUND FOR CLEAR DB');
-  }
-  // var sequelize = new Sequelize('heroku_ffc37eb62708e4e', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-  //   host: 'us-cdbr-iron-east-04.cleardb.net',
-  //   dialect: 'mysql'
-  // });
+  var sequelize = new Sequelize('mysql://b5a7a9a0714f26:ed513952@us-cdbr-iron-east-04.cleardb.net/heroku_ffc37eb62708e4e?reconnect=true');
 } else {
   var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, { // FOR DEVELOPMENT
     host: 'localhost',
     dialect: 'mysql'
   });
 }
-
+*/
 
 var Chatroom = sequelize.define('chatrooms', {
   roomName: {type: Sequelize.STRING, field: 'room_name'},
