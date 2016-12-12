@@ -82,6 +82,8 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       socket.on('opponent leave', function(username){
         $('.messageList').append($('<li class="chatNotifications">').text(username + ' has left the arena.'));
         Chatroom.opponent = '';
+        $scope.session = null;
+        console.log('The session is now :', $scope.session);
       });
       // Listens for a new message from the server
       socket.on('posted message', function(msg){
@@ -114,6 +116,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       $scope.leaveRoom = function() {
         // Update db for user leaving chatroom
         Chatroom.leaveChatroom(function() { lobbySocket.emit('user leaves room');});
+        Chatroom.endSession($scope.roomName);
 
         $location.path('/token');
         socket.emit('leave', $scope.myuser, $scope.roomName);

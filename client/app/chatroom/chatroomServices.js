@@ -51,7 +51,7 @@ services.factory('Chatroom', function($http) {
   };
 
   var createSession = function(roomName, cb) {
-    var result = $http({
+    return $http({
       method: 'GET',
       url: '/messages/session-next',
     }).then(function(res) {
@@ -67,8 +67,16 @@ services.factory('Chatroom', function($http) {
     });
   };
 
-  var endSession = function() {
-
+  // endSession function run by user who first leaves
+  var endSession = function(roomName) {
+    $http({
+      method: 'PUT',
+      url: '/chatrooms',
+      data: JSON.stringify({
+        roomName: roomName,
+        session: null,
+      })
+    });
   };
 
   var postMessage = function(message, user, opponent, chatRoom, session) {
