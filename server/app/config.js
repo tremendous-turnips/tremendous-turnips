@@ -1,7 +1,6 @@
 var Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('mysql://b5a7a9a0714f26:ed513952@us-cdbr-iron-east-04.cleardb.net/heroku_ffc37eb62708e4e?reconnect=true');
-/*
+
 if (process.env.CLEARDB_DATABASE_URL) { // FOR HEROKU DEPLOYMENT
   var sequelize = new Sequelize('mysql://b5a7a9a0714f26:ed513952@us-cdbr-iron-east-04.cleardb.net/heroku_ffc37eb62708e4e?reconnect=true');
 } else {
@@ -10,7 +9,7 @@ if (process.env.CLEARDB_DATABASE_URL) { // FOR HEROKU DEPLOYMENT
     dialect: 'mysql'
   });
 }
-*/
+
 
 var Chatroom = sequelize.define('chatrooms', {
   roomName: {type: Sequelize.STRING, field: 'room_name'},
