@@ -84,6 +84,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         $scope.glued = true; // Scroll the screen if messages overflow
         $scope.opponent = '';
         $scope.session = null;
+        $('.userIsTyping').hide();
         console.log('The session is now :', $scope.session);
       });
       // Listens for a new message from the server
