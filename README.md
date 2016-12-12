@@ -20,7 +20,9 @@
 
 ## Usage
 
-> Some usage instructions
+> Check out the deployed app [over here.](https://squabbles.herokuapp.com)
+> Log in with a username, choose a topic and side to debate, wait for someone to join the room and begin debating.
+> Leave the room when the debate is over and you'll be redirected to a page with some stats.
 
 ## Requirements
 
@@ -45,9 +47,9 @@ npm start
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://waffle.io/tremendous-turnips/tremendous-turnips)
 
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+See [CONTRIBUTING.md](_CONTRIBUTING.md) for contribution guidelines.
