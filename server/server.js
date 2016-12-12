@@ -24,7 +24,7 @@ app.get('/lobby', function(req, res) {
   db.Chatroom.findAll({})
   .then(function(rooms) {
     res.send(JSON.stringify(rooms));
-  })
+  });
 });
 
 app.put('/lobby', function(req, res) {
@@ -39,11 +39,11 @@ app.put('/lobby', function(req, res) {
       if (req.body.user === 1) {
         room.updateAttributes({
           firstUser: req.body.username,
-        })
+        });
       } else {
         room.updateAttributes({
           secondUser: req.body.username
-        })
+        });
       }
     } else {
       res.send('Error on updating given chatroom name');
@@ -52,7 +52,7 @@ app.put('/lobby', function(req, res) {
   .then(function(room) {
     console.log('Successfully posted new username into db chatrooms');
     res.send(room);
-  })
+  });
 });
 
 // ROUTE TO DO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -67,8 +67,8 @@ app.post('/messages', function(req, res) {
   .then(function() {
     console.log('POSTED TEXT', req.body.text);
     res.send('Some random message: posted to messages route');
-  })
-})
+  });
+});
 
 ////////////////////////////////////////////////////////////////////////////////
 // SOCKET.IO
@@ -92,7 +92,7 @@ chatroom1.on('connection', function(socket) {
   });
   socket.on('typing', function(username, msg) {
     socket.broadcast.emit('typing message', username, msg);
-  })
+  });
 });
 
 // =============================================================================
@@ -109,7 +109,7 @@ lobby1.on('connection', function(socket) {
   socket.on('user leaves room', function(username, user, roomName) {
     socket.broadcast.emit('other user leaves room', username);
   });
-})
+});
 
 
 app.use(express.static('socket.io'));
@@ -123,13 +123,13 @@ app.post('/users', function(req, res) {
 
 app.get('/validLogin', function(req, res) {
   res.status('200').send(req.session.username);
-})
+});
 
 app.post('/logout', function(req, res) {
   req.session.destroy (function() {
     res.status(200).send('destroyed');
   });
-})
+});
 
 app.post('/leavechatroom', function(req, res) {
   // Remove user from chatroom when leaving
@@ -139,11 +139,11 @@ app.post('/leavechatroom', function(req, res) {
       if (req.session.user === 1) {
         room.updateAttributes({
           firstUser: null,
-        })
+        });
       } else {
         room.updateAttributes({
           secondUser: null
-        })
+        });
       }
     } else {
       res.send('Error on updating given chatroom users');
@@ -152,15 +152,15 @@ app.post('/leavechatroom', function(req, res) {
   .then(function(room) {
     console.log('Successfully removed username from db chatroom');
     res.send(room);
-  })
+  });
 });
 
 app.get('/token', function(req, res) {
   db.Message.findAll({where: { user: req.session.username}})
   .then(function(messages) {
     res.send(messages);
-  })
-})
+  });
+});
 
 console.log('Server running on port', port);
 server.listen(port, function() {});

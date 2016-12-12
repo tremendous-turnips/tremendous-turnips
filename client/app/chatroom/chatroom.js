@@ -68,7 +68,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
 
       $scope.leaveRoom = function() {
         // Update db for user leaving chatroom
-        Chatroom.leaveChatroom(function() { lobbySocket.emit('user leaves room') });
+        Chatroom.leaveChatroom(function() { lobbySocket.emit('user leaves room');});
 
         $location.path('/token');
         socket.emit('leave', $scope.myuser);
@@ -76,7 +76,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
 
       $scope.postMessage = function() {
         // Emit a socket event to send the message with the username and text
-        var concatMessage = $scope.myuser + ': ' +$scope.userMessage
+        var concatMessage = $scope.myuser + ': ' +$scope.userMessage;
         socket.emit('chat message', $scope.myuser, $scope.userMessage); // This is a socket, not post request
 
         // Post requst to server to write to messages table
@@ -93,6 +93,6 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
     } else {
       $location.path('/login');
     }
-  })
+  });
 
 });

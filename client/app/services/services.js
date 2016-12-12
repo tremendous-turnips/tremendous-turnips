@@ -11,7 +11,7 @@ services.factory('Logins', function($http) {
     .then(function (resp) {
       return resp;
     });
-  }
+  };
 
   return {
     postUsername: postUsername
@@ -28,8 +28,8 @@ services.factory('Lobby', function($location, $http) {
     })
     .then(function(result) {
       cb(result);
-    })
-  }
+    });
+  };
 
   var fetchRooms = function(cb) {
     return $http({
@@ -39,7 +39,7 @@ services.factory('Lobby', function($location, $http) {
     .then(function (rooms) {
       cb(rooms);
     });
-  }
+  };
 
   var logoutUser = function() {
     return $http({
@@ -49,7 +49,7 @@ services.factory('Lobby', function($location, $http) {
     .then(function() {
       console.log('SUCCESSFULLY LOGGED OUT');
     });
-  }
+  };
 
   var insertUser = function(username, user, roomName, cb) {
     return $http({
@@ -83,8 +83,8 @@ services.factory('Chatroom', function($http) {
     })
     .then(function(result) {
       cb(result);
-    })
-  }
+    });
+  };
 
   var currRoom = '';
   var opponent = '';
@@ -103,7 +103,7 @@ services.factory('Chatroom', function($http) {
     .then(function() {
       console.log('SUCCESSFULLY POSTED MESSAGE OUT');
     });
-  }
+  };
 
   var leaveChatroom = function(cb) {
     return $http({
@@ -133,8 +133,8 @@ services.factory('Token', function($http) {
     })
     .then(function(result) {
       cb(result);
-    })
-  }
+    });
+  };
 
   var grabAllBattles = function(cb) {
     return $http({
@@ -144,7 +144,7 @@ services.factory('Token', function($http) {
     .then(function(result) {
       cb(result);
     });
-  }
+  };
 
   return {
     validateUser: validateUser,
