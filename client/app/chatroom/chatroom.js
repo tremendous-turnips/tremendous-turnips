@@ -34,7 +34,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       // .then(function() {
       $scope.roomName = Chatroom.currRoom;
 
-      Chatroom.opponentName($scope.myuser, $scope.roomName, function(opponent) {
+      Chatroom.getOpponentName($scope.myuser, $scope.roomName, function(opponent) {
         if (!opponent) {
           $('.messageList').append($('<li class="chatNotifications">').text('You are the first to enter the arena.'));
           $scope.opponent = null;
@@ -43,6 +43,19 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
           $scope.opponent = opponent;
         }
       });
+
+      setTimeout(function() {
+        Chatroom.getSessionName($scope.roomName, function(session) {
+          console.log(session, "SESSION");
+          if (!session) {
+            $scope.session = null;
+            console.log('No session yet.');
+          } else {
+            $scope.session = session;
+            console.log('The session is: ', session);
+          }
+        });
+      }, 1000);
 
 
       // Set focus to input text field so user doesn't need to click on it to type
@@ -61,7 +74,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       socket.on('opponent enter', function(username){
         $('.messageList').append($('<li class="chatNotifications">').text(username + ' has entered the arena.'));
         Chatroom.opponent = username;
-        Chatroom.createSession(function(session) {
+        Chatroom.createSession($scope.roomName, function(session) {
           $scope.session = session;
           console.log('The new session is: ', session);
         });
