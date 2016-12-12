@@ -1,14 +1,30 @@
-<button class='btn btn-danger' ng-click='leaveRoom()'> Lobby </button>
 
-
-<select ng-model='selectFilter' ng-value='session[1]' ng-options='session[1] for session in data.sessions'>
-</select>
-<div> SESSION: {{selectFilter[0]}}</div>
-<div> CHATROOM: {{selectFilter[1]}}</div>
-<div> OPPONENT: {{selectFilter[2]}}</div>
-<div ng-repeat='messages in selectFilter.slice(3, session.length)'>
-  <div> {{messages.user}}: {{messages.text}} </div>
+<div class='tokenFilterDiv'>
+  <button class='btn btn-danger tokenButton' ng-click='leaveRoom()'> Lobby </button>
+  <select class='selectFilter form-control' ng-model='selectFilter' ng-value='session[1]' ng-options='session[1] for session in data.sessions'>
+    <option value="" disabled selected>Filter by Session!</option>
+  </select>
 </div>
+<div class='card'>
+  <div class='tokenStats list-group list-group-flush'>
+    <div class='list-group-item'> SESSION: {{selectFilter[0]}}</div>
+    <div class='list-group-item'> CHATROOM: {{selectFilter[1]}}</div>
+    <div class='list-group-item'> OPPONENT: {{selectFilter[2]}}</div>
+    <div class='list-group-item'>
+      <div ng-repeat='messages in selectFilter.slice(3, session.length)'>
+        <div> {{messages.user}}: {{messages.text}} </div>
+      </div>
+    <div>
+  </div>
+</div>
+
+<!-- <div class="card">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Cras justo odio</li>
+    <li class="list-group-item">Dapibus ac facilisis in</li>
+    <li class="list-group-item">Vestibulum at eros</li>
+  </ul>
+</div> -->
 <!-- <div ng-repeat='session in data.sessions'>
 </div> -->
 <!--< h2 class="token-header">{{ chatroom }}</h2>

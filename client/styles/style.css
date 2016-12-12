@@ -82,6 +82,23 @@ tr {
 .room {
 }
 
-.token-header {
-  text-align: center !important;
+.tokenFilterDiv {
+  text-align: center;
+  margin: auto !important;
+}
+
+.tokenButton {
+  margin: 0 auto !important;
+  width: 10%;
+}
+
+.selectFilter {
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 20% !important;
+}
+
+.tokenStats {
+  margin: 0 30% 0 30%;
 }
