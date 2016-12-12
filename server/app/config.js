@@ -1,12 +1,12 @@
 var Sequelize = require('sequelize');
 
-if (process.env.CLEARDB_DATABASE_URL) {
+if (process.env.CLEARDB_DATABASE_URL) { // FOR HEROKU DEPLOYMENT
   var sequelize = new Sequelize('heroku_ffc37eb62708e4e', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     host: 'us-cdbr-iron-east-04.cleardb.net',
     dialect: 'mysql'
   });
 } else {
-  var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, {
+  var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, { // FOR DEVELOPMENT
     host: 'localhost',
     dialect: 'mysql'
   });
