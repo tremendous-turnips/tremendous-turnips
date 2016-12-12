@@ -24,3 +24,12 @@ module.exports.findNextUniqueSessionID = function(req, res) {
     res.send(next.toString());
   });
 };
+
+// Find messages with matching session username
+module.exports.findMessageByUsername = function(req, res) {
+  console.log('find mesage by username =============')
+  db.Message.findAll({where: { user: req.session.username}})
+  .then(function(messages) {
+    res.send(messages);
+  });
+}

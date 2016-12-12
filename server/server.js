@@ -13,7 +13,7 @@ var session = require('express-session');
 // Controller dependencies
 var ChatroomCtrl = require('./app/controllers/chatroom.js');
 var MessageCtrl = require('./app/controllers/message.js');
-var LoginCtrl = require('./app/controllers/login.js');
+var utils = require('./app/utils.js');
 
 // Environment variables
 var port = process.env.PORT || 1337;
@@ -24,19 +24,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({secret: 'COOKIE'}));
 app.use(express.static(__dirname + '/../client'));
 
-// Routes
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/../client/index.html');
-});
-
-app.get('/lobby', ChatroomCtrl.fetchRooms);
-
-app.put('/lobby', ChatroomCtrl.updateLobbyRooms);
-
-app.post('/messages', MessageCtrl.saveMessage);
-
-app.get('/messages/session-next', MessageCtrl.findNextUniqueSessionID);
-
 ////////////////////////////////////////////////////////////////////////////////
 // SOCKET.IO
 ////////////////////////////////////////////////////////////////////////////////
@@ -44,75 +31,27 @@ var sockets = require('./sockets.js');
 app.use(express.static('socket.io'));
 ////////////////////////////////////////////////////////////////////////////////
 
-app.post('/users', LoginCtrl.setUsername);
-
-app.get('/validLogin', function(req, res) {
-  res.status('200').send(req.session.username);
+// Routes
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/../client/index.html');
 });
 
-app.post('/logout', function(req, res) {
-  req.session.destroy (function() {
-    res.status(200).send('destroyed');
-  });
-});
+// need to consolidate
+app.get('/lobby', ChatroomCtrl.fetchRooms);
+app.get('/getChatrooms', ChatroomCtrl.getChatrooms);
+app.get('/chatrooms', ChatroomCtrl.getRooms);
 
-app.get('/chatrooms', function(req, res) {
-  db.Chatroom.findAll({})
-  .then(function(chatrooms) {
-    res.send(chatrooms);
-  });
-});
+app.put('/lobby', ChatroomCtrl.updateLobbyRooms);
+app.put('/chatrooms', ChatroomCtrl.updateRoomSession);
+app.post('/leavechatroom', ChatroomCtrl.leaveChatroom);
 
-app.put('/chatrooms', function(req, res) {
-  console.log(req.body, "PUT /chatrooms request!")
-  db.Chatroom.find({ where: { roomName: req.body.roomName } })
-  .then(function(room) {
-    room.updateAttributes({
-      session: req.body.session
-    });
-    res.send('Added session to room.');
-  });
-});
+app.get('/messages/session-next', MessageCtrl.findNextUniqueSessionID);
+app.get('/token', MessageCtrl.findMessageByUsername);
+app.post('/messages', MessageCtrl.saveMessage);
 
-app.post('/leavechatroom', function(req, res) {
-  // Remove user from chatroom when leaving
-  db.Chatroom.find({ where: { roomName: req.session.chatroomName } })
-  .then(function(room) {
-    if (room) {
-      if (req.session.user === 1) {
-        room.updateAttributes({
-          firstUser: null,
-        });
-      } else {
-        room.updateAttributes({
-          secondUser: null
-        });
-      }
-    } else {
-      res.send('Error on updating given chatroom users');
-    }
-  })
-  .then(function(room) {
-    console.log('Successfully removed username from db chatroom');
-    res.send(room);
-  });
-});
-
-app.get('/token', function(req, res) {
-  db.Message.findAll({where: { user: req.session.username}})
-  .then(function(messages) {
-    res.send(messages);
-  });
-});
-
-app.get('/getChatrooms', function(req, res) {
-  db.Chatroom.findAll({})
-  .then(function(rooms) {
-    res.send(rooms);
-  })
-})
+app.get('/validLogin', utils.getUsername);
+app.post('/users', utils.setUsername);
+app.post('/logout', utils.logout);
 
 console.log('Server running on port', port);
 server.listen(port, function() {});
-// app.listen(port, function() {
-// });
