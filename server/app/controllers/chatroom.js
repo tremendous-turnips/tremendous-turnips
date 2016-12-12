@@ -1,4 +1,3 @@
-var Promise = require('bluebird');
 var db = require('../config.js');
 
 // Gets all rooms from db
