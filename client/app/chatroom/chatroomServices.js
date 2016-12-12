@@ -17,7 +17,7 @@ services.factory('Chatroom', function($http) {
   var getOpponentName = function(myuser, chatRoom, cb) {
     return $http({
       method: 'GET',
-      url: '/lobby',
+      url: '/chatrooms',
     })
     .then(function (rooms) {
       var opponent = '';
@@ -112,7 +112,7 @@ services.factory('Chatroom', function($http) {
   var grabChatrooms = function(cb) {
     return $http({
       method: 'GET',
-      url: '/getChatrooms'
+      url: '/chatrooms'
     })
     .then(function(chatrooms) {
       cb(chatrooms.data);
