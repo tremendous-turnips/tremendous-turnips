@@ -4,7 +4,7 @@ var db = require('../config.js');
 module.exports.fetchRooms = function(req, res) {
   db.Chatroom.findAll({})
   .then(function(rooms) {
-    res.send(JSON.stringify(rooms));
+    res.send(rooms);
   });
 };
 
@@ -71,21 +71,4 @@ module.exports.leaveChatroom = function(req, res) {
     console.log('Successfully removed username from db chatroom');
     res.send(room);
   });
-};
-
-/////////////////////////////////////////////////////////////////
-// TO BE DELETED 
-/////////////////////////////////////////////////////////////////
-module.exports.getRooms = function(req, res) {
-  db.Chatroom.findAll({})
-  .then(function(chatrooms) {
-    res.send(chatrooms);
-  });
-};
-
-module.exports.getChatrooms = function(req, res) {
-  db.Chatroom.findAll({})
-  .then(function(rooms) {
-    res.send(rooms);
-  })
 };

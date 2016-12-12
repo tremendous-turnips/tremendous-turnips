@@ -14,7 +14,7 @@ services.factory('Lobby', function($location, $http) {
   var fetchRooms = function(cb) {
     return $http({
       method: 'GET',
-      url: '/lobby'
+      url: '/chatrooms'
     })
     .then(function (rooms) {
       cb(rooms);

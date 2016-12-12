@@ -36,10 +36,7 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/../client/index.html');
 });
 
-// need to consolidate
-app.get('/lobby', ChatroomCtrl.fetchRooms);
-app.get('/getChatrooms', ChatroomCtrl.getChatrooms);
-app.get('/chatrooms', ChatroomCtrl.getRooms);
+app.get('/chatrooms', ChatroomCtrl.fetchRooms);
 
 app.put('/lobby', ChatroomCtrl.updateLobbyRooms);
 app.put('/chatrooms', ChatroomCtrl.updateRoomSession);
