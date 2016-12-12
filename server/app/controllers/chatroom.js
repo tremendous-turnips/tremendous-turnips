@@ -37,3 +37,55 @@ module.exports.updateLobbyRooms = function(req, res) {
   });
 };
 
+// Update room session
+module.exports.updateRoomSession = function(req, res) {
+  console.log(req.body, "PUT /chatrooms request!")
+  db.Chatroom.find({ where: { roomName: req.body.roomName } })
+  .then(function(room) {
+    room.updateAttributes({
+      session: req.body.session
+    });
+    res.send('Added session to room.');
+  });
+};
+
+// Remove user from chatroom in DB when leaving
+module.exports.leaveChatroom = function(req, res) {
+  db.Chatroom.find({ where: { roomName: req.session.chatroomName } })
+  .then(function(room) {
+    if (room) {
+      if (req.session.user === 1) {
+        room.updateAttributes({
+          firstUser: null,
+        });
+      } else {
+        room.updateAttributes({
+          secondUser: null
+        });
+      }
+    } else {
+      res.send('Error on updating given chatroom users');
+    }
+  })
+  .then(function(room) {
+    console.log('Successfully removed username from db chatroom');
+    res.send(room);
+  });
+};
+
+/////////////////////////////////////////////////////////////////
+// TO BE DELETED 
+/////////////////////////////////////////////////////////////////
+module.exports.getRooms = function(req, res) {
+  db.Chatroom.findAll({})
+  .then(function(chatrooms) {
+    res.send(chatrooms);
+  });
+};
+
+module.exports.getChatrooms = function(req, res) {
+  db.Chatroom.findAll({})
+  .then(function(rooms) {
+    res.send(rooms);
+  })
+};
