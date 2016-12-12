@@ -14,7 +14,7 @@ services.factory('Token', function($http) {
   var grabAllBattles = function(username, cb) {
     return $http({
       method: 'GET',
-      url: '/token?username=' + 'username',
+      url: '/token'
     })
     .then(function(result) {
       cb(result.data);

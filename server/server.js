@@ -145,7 +145,7 @@ app.post('/leavechatroom', function(req, res) {
 });
 
 app.get('/token', function(req, res) {
-  db.Message.findAll({where: { user: req.query.username}})
+  db.Message.findAll({where: { user: req.session.username}})
   .then(function(messages) {
     res.send(messages);
   });
@@ -155,8 +155,8 @@ app.get('/getChatrooms', function(req, res) {
   db.Chatroom.findAll({})
   .then(function(rooms) {
     res.send(rooms);
-  });
-});
+  })
+})
 
 console.log('Server running on port', port);
 server.listen(port, function() {});
