@@ -9,12 +9,11 @@ token.controller('tokenController', function($scope, $location, Token, Lobby, Ch
 
       $scope.data = {battles: []};
 
-      Token.grabAllBattles(function(result) {
+      Token.grabAllBattles($scope.myuser, function(result) {
 
         $scope.data.battles = result.data;
         console.log(result.data);
       });
-
 
       $scope.leaveRoom = function() {
         $location.path('/lobby');
