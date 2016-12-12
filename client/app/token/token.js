@@ -15,7 +15,6 @@ token.controller('tokenController', function($scope, $location, Token, Lobby, Ch
         console.log(result.data);
       });
 
-
       $scope.leaveRoom = function() {
         $location.path('/lobby');
       };
