@@ -2,17 +2,17 @@
   <h1>{{roomName}}</h1>
 </div>
 <div>
-  <div class="messageList-container" scroll-glue>
+  <div class="messageList-container" scroll-glue="glued">
     <ul class="messageList"></ul>
   </div>
-  <form class="userResponseForm" name="userResponseForm" ng-submit="postMessage()">
+  <form class="userResponseForm" name="userResponseForm">
     <div class="userIsTyping">
     </div>
     <div class="input-group">
       <input class="messageTextBox form-control" placeholder="Go forth and debate..."
              ng-model="userMessage" ng-keyup="showTyping()" />
       <span class="input-group-btn">
-        <button class="btn btn-info">Send</button>
+        <button class="btn btn-info" ng-click="postMessage()">Send</button>
         <button class="btn btn-danger" ng-click='leaveRoom()'> Leave </button>
       </span>
     </div>
