@@ -152,13 +152,25 @@ services.factory('Chatroom', function($http) {
     });
   };
 
+  var grabChatrooms = function(cb) {
+    return $http({
+      method: 'GET',
+      url: '/getChatrooms'
+    })
+    .then(function(chatrooms) {
+      cb(chatrooms.data);
+    })
+  };
   return {
     validateUser: validateUser,
     postMessage: postMessage,
     leaveChatroom: leaveChatroom,
+
     opponentName: opponentName,
     createSession: createSession,
     endSession: endSession
+    grabChatrooms: grabChatrooms
+
   };
 });
 
@@ -179,7 +191,7 @@ services.factory('Token', function($http) {
       url: '/token'
     })
     .then(function(result) {
-      cb(result);
+      cb(result.data);
     });
   };
 

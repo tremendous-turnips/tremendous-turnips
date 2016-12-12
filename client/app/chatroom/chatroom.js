@@ -2,9 +2,9 @@ var chatroom = angular.module('argue.chatroom', [
   'luegg.directives' // scroll-glue directive: https://github.com/Luegg/angularjs-scroll-glue
 ]);
 
+
 var socket = io('/chatroom');
 var lobbySocket = io('/lobby');
-
 ///////////////////////////////////////////////////////////
 // Chatroom Controller
 ///////////////////////////////////////////////////////////
@@ -13,6 +13,25 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
     $scope.myuser = result.data;
   }).then(function() {
     if ($scope.myuser !== '') {
+
+      //ADDED A GRAB CHATROOM FUNCTION IN SERVICES
+      // $scope.data = {roomTracker: []};
+      // Chatroom.grabChatrooms(function(rooms){
+      //   rooms.forEach(function(roomData) {
+      //     var room = roomData.room_name;
+      //     var roomUsers = 0;
+      //     if (roomData.first_user !== null) {
+      //       roomUsers++;
+      //     }
+      //     if (roomData.second_user !== null) {
+      //       roomUsers++;
+      //     }
+      //     $scope.data.roomTracker.push({
+      //       room: roomUsers
+      //     });
+      //   });
+      // })
+      // .then(function() {
       $scope.roomName = Chatroom.currRoom;
 
       Chatroom.opponentName($scope.myuser, $scope.roomName, function(opponent) {
@@ -75,7 +94,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       });
       ///////////////////////////////////////////////////////////
       $scope.enterRoom = function() {
-        socket.emit('enter', $scope.myuser);
+        socket.emit('enter', $scope.myuser, $scope.roomName);
       };
       $scope.enterRoom();
 
@@ -84,7 +103,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         Chatroom.leaveChatroom(function() { lobbySocket.emit('user leaves room');});
 
         $location.path('/token');
-        socket.emit('leave', $scope.myuser);
+        socket.emit('leave', $scope.myuser, $scope.roomName);
       };
 
       $scope.postMessage = function() {
@@ -101,8 +120,9 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       };
 
       $scope.showTyping = function() {
-        socket.emit('typing', $scope.myuser, $scope.userMessage);
+        socket.emit('typing', $scope.myuser, $scope.userMessage, $scope.roomName);
       };
+      // })
     } else {
       $location.path('/login');
     }

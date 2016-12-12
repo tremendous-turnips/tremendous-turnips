@@ -90,17 +90,19 @@ var chatroom1 = io.of('/chatroom');
 
 chatroom1.on('connection', function(socket) {
   console.log('chatroom socket open ===============================');
-  socket.on('enter', function(username) {
-    socket.broadcast.emit('opponent enter', username);
+  socket.on('enter', function(username, room) {
+    socket.join(room);
+    socket.to(room).emit('opponent enter', username);
   });
-  socket.on('leave', function(username) {
-    socket.broadcast.emit('opponent leave', username);
+  socket.on('leave', function(username, room) {
+    socket.to(room).emit('opponent leave', username);
+    socket.leave(room);
   });
-  socket.on('chat message', function(username, message, chatroom) {
-    socket.broadcast.emit('posted message', username + ': ' + message);
+  socket.on('chat message', function(username, message, room) {
+    socket.to(room).emit('posted message', username + ': ' + message);
   });
-  socket.on('typing', function(username, msg) {
-    socket.broadcast.emit('typing message', username, msg);
+  socket.on('typing', function(username, msg, room) {
+    socket.to(room).emit('typing message', username, msg);
   });
 });
 
@@ -170,6 +172,13 @@ app.get('/token', function(req, res) {
     res.send(messages);
   });
 });
+
+app.get('/getChatrooms', function(req, res) {
+  db.Chatroom.findAll({})
+  .then(function(rooms) {
+    res.send(rooms);
+  })
+})
 
 console.log('Server running on port', port);
 server.listen(port, function() {});
