@@ -17,10 +17,10 @@ var port = process.env.PORT || 1337;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({secret: 'COOKIE'}));
-app.use(express.static('client'));
+app.use(express.static(__dirname + '/../client'));
 
 app.get('/', function(req, res) {
-  res.sendFile('../client/index.html');
+  res.sendFile('index.html');
 });
 
 app.get('/lobby', function(req, res) {
