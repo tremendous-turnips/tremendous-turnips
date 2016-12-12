@@ -8,75 +8,35 @@ var db = require('./app/config.js');
 var Sequelize = require('sequelize');
 var session = require('express-session');
 
+// Controller dependencies
+var ChatroomCtrl = require('./app/controllers/chatroom.js');
+var MessageCtrl = require('./app/controllers/message.js');
 
 
 var port = process.env.PORT || 1337;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({secret: 'COOKIE'}));
-app.use(express.static('client'));
+app.use(express.static('../client'));
 
 app.get('/', function(req, res) {
-  res.sendFile(path(__dirname,'client/index.html'));
+  res.sendFile(path.join(__dirname,'../client/index.html'));
 });
 
 app.get('/lobby', function(req, res) {
-  db.Chatroom.findAll({})
-  .then(function(rooms) {
-    res.send(JSON.stringify(rooms));
-  });
+  ChatroomCtrl.fetchRooms(req, res);
 });
 
 app.put('/lobby', function(req, res) {
-  db.Chatroom.find({ where: { roomName: req.body.chatroomName } })
-  .then(function(room) {
-    if (room) {
-      // Set session variables to be able to delete name after leaving / logging out
-      req.session.user = req.body.user;
-      req.session.chatroomName = req.body.chatroomName;
-
-      // Update chatroom depending on if entering as user 1 or user 2
-      if (req.body.user === 1) {
-        room.updateAttributes({
-          firstUser: req.body.username,
-        });
-      } else {
-        room.updateAttributes({
-          secondUser: req.body.username
-        });
-      }
-    } else {
-      res.send('Error on updating given chatroom name');
-    }
-  })
-  .then(function(room) {
-    console.log('Successfully posted new username into db chatrooms');
-    res.send(room);
-  });
+  ChatroomCtrl.updateLobbyRooms(req, res);
 });
 
-// ROUTE TO DO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 app.post('/messages', function(req, res) {
-  console.log(req.body.chatRoom);
-  db.Message.create({
-    text: req.body.text,
-    user: req.body.user,
-    chatroom: req.body.chatRoom,
-    opponent: req.body.opponent,
-    session: req.body.session
-  })
-  .then(function() {
-    console.log('POSTED TEXT', req.body.text);
-    res.send('Some random message: posted to messages route');
-  });
+  MessageCtrl.saveMessage(req, res);
 });
 
 app.get('/messages/session-next', function(req, res) {
-  db.Message.aggregate('session', 'DISTINCT', {plain: false})
-  .then(function(count) {
-    var next = count.length + 1;
-    res.send(next.toString());
-  });
+  MessageCtrl.findNextUniqueSessionID(req, res);
 });
 
 ////////////////////////////////////////////////////////////////////////////////
