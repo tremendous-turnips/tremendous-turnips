@@ -128,6 +128,8 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         // Emit a socket event to send the message with the username and text
         var concatMessage = $scope.myuser + ': ' +$scope.userMessage;
         socket.emit('chat message', $scope.myuser, $scope.userMessage, $scope.roomName); // This is a socket, not post request
+        $scope.userMessage = '';
+        socket.emit('typing', $scope.myuser, $scope.userMessage, $scope.roomName);
 
         // Post requst to server to write to messages table
         Chatroom.postMessage($scope.userMessage, $scope.myuser, $scope.opponent, $scope.roomName, $scope.session);
@@ -142,6 +144,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       $scope.showTyping = function() {
         socket.emit('typing', $scope.myuser, $scope.userMessage, $scope.roomName);
       };
+
       // })
     } else {
       $location.path('/login');
