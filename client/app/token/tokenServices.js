@@ -11,10 +11,10 @@ services.factory('Token', function($http) {
     });
   };
 
-  var grabAllBattles = function(cb) {
+  var grabAllBattles = function(username, cb) {
     return $http({
       method: 'GET',
-      url: '/token'
+      url: '/token?username=' + 'username',
     })
     .then(function(result) {
       cb(result.data);
