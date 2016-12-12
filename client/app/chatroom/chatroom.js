@@ -73,7 +73,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       // Listen for when opponent enters the room
       socket.on('opponent enter', function(username){
         $('.messageList').append($('<li class="chatNotifications">').text(username + ' has entered the arena.'));
-        Chatroom.opponent = username;
+        $scope.opponent = username;
         Chatroom.createSession($scope.roomName, function(session) {
           $scope.session = session;
           console.log('The new session is: ', session);
@@ -81,13 +81,15 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       });
       socket.on('opponent leave', function(username){
         $('.messageList').append($('<li class="chatNotifications">').text(username + ' has left the arena.'));
-        Chatroom.opponent = '';
+        $scope.glued = true; // Scroll the screen if messages overflow
+        $scope.opponent = '';
         $scope.session = null;
         console.log('The session is now :', $scope.session);
       });
       // Listens for a new message from the server
       socket.on('posted message', function(msg){
         $('.messageList').append($('<li>').text(msg));
+        $scope.glued = true; // Scroll the screen if messages overflow (NOT WORKING!!!)
       });
 
       // Listens for another user is typing
@@ -118,8 +120,8 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         Chatroom.leaveChatroom(function() { lobbySocket.emit('user leaves room');});
         Chatroom.endSession($scope.roomName);
 
-        $location.path('/token');
         socket.emit('leave', $scope.myuser, $scope.roomName);
+        $location.path('/token');
       };
 
       $scope.postMessage = function() {
@@ -133,6 +135,8 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         // Clear message text box
         $('.messageList').append($('<li>').text(concatMessage));
         $('.messageTextBox').val('');
+
+        $scope.glued = true; // Scroll the screen if messages overflow
       };
 
       $scope.showTyping = function() {
