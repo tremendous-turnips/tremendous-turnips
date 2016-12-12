@@ -3,7 +3,9 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
+// Export for sockets
+module.exports.server = server;
+// var io = require('socket.io')(server);
 var db = require('./app/config.js');
 var Sequelize = require('sequelize');
 var session = require('express-session');
@@ -11,86 +13,38 @@ var session = require('express-session');
 // Controller dependencies
 var ChatroomCtrl = require('./app/controllers/chatroom.js');
 var MessageCtrl = require('./app/controllers/message.js');
+var UserCtrl = require('./app/controllers/user.js');
 
-
+// Environment variables
 var port = process.env.PORT || 1337;
+
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({secret: 'COOKIE'}));
 app.use(express.static(__dirname + '/../client'));
 
+// Routes
 app.get('/', function(req, res) {
-  res.sendFile('index.html');
+  res.sendFile(__dirname + '/../client/index.html');
 });
 
-app.get('/lobby', function(req, res) {
-  ChatroomCtrl.fetchRooms(req, res);
-});
+app.get('/lobby', ChatroomCtrl.fetchRooms);
 
-app.put('/lobby', function(req, res) {
-  ChatroomCtrl.updateLobbyRooms(req, res);
-});
+app.put('/lobby', ChatroomCtrl.updateLobbyRooms);
 
-app.post('/messages', function(req, res) {
-  MessageCtrl.saveMessage(req, res);
-});
+app.post('/messages', MessageCtrl.saveMessage);
 
-app.get('/messages/session-next', function(req, res) {
-  MessageCtrl.findNextUniqueSessionID(req, res);
-});
+app.get('/messages/session-next', MessageCtrl.findNextUniqueSessionID);
 
 ////////////////////////////////////////////////////////////////////////////////
 // SOCKET.IO
 ////////////////////////////////////////////////////////////////////////////////
-
-// =============================================================================
-// CHATROOM SOCKET
-// =============================================================================
-var chatroom1 = io.of('/chatroom');
-
-chatroom1.on('connection', function(socket) {
-  console.log('chatroom socket open ===============================');
-  socket.on('enter', function(username, room) {
-    socket.join(room);
-    socket.to(room).emit('opponent enter', username);
-  });
-  socket.on('leave', function(username, room) {
-    socket.to(room).emit('opponent leave', username);
-    socket.leave(room);
-  });
-  socket.on('chat message', function(username, message, room) {
-    socket.to(room).emit('posted message', username + ': ' + message);
-  });
-  socket.on('typing', function(username, msg, room) {
-    socket.to(room).emit('typing message', username, msg);
-  });
-});
-
-// =============================================================================
-// LOBBY SOCKET
-// =============================================================================
-var lobby1 = io.of('/lobby');
-
-lobby1.on('connection', function(socket) {
-  console.log('lobby socket open ===============================');
-  // For live updates when another user enters a chatroom
-  socket.on('user enters room', function(username, user, roomName) {
-    socket.broadcast.emit('other user enters room', username, user, roomName);
-  });
-  socket.on('user leaves room', function(username, user, roomName) {
-    socket.broadcast.emit('other user leaves room', username);
-  });
-});
-
-
+var sockets = require('./sockets.js');
 app.use(express.static('socket.io'));
 ////////////////////////////////////////////////////////////////////////////////
 
-app.post('/users', function(req, res) {
-  req.session.username = req.body.username;
-  console.log('got it');
-  res.status('200').json(req.session.username);
-});
+app.post('/users', UserCtrl.setUsername);
 
 app.get('/validLogin', function(req, res) {
   res.status('200').send(req.session.username);
