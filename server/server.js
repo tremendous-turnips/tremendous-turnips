@@ -7,7 +7,7 @@ var io = require('socket.io')(server);
 var db = require('./app/config.js');
 var Sequelize = require('sequelize');
 var session = require('express-session');
-
+var ChatroomCtrl = require('./app/controllers/chatroom.js')
 
 
 var port = process.env.PORT || 1337;
@@ -21,10 +21,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/lobby', function(req, res) {
-  db.Chatroom.findAll({})
-  .then(function(rooms) {
-    res.send(JSON.stringify(rooms));
-  });
+  ChatroomCtrl.fetchRooms(req, res);
 });
 
 app.put('/lobby', function(req, res) {
