@@ -7,12 +7,17 @@ token.controller('tokenController', function($scope, $location, Token, Lobby, Ch
   }).then(function() {
     if ($scope.myuser !== '') {
 
-      $scope.data = {battles: []};
+      $scope.data = {sessions: {}};
 
-      Token.grabAllBattles($scope.myuser, function(result) {
-
-        $scope.data.battles = result.data;
-        console.log(result.data);
+      Token.grabAllBattles(function(result) {
+        result.forEach(function(battle) {
+          if (!$scope.data.sessions[battle.session]) {
+            $scope.data.sessions[battle.session] = [battle.session, battle.chatroom, battle.opponent];
+            $scope.data.sessions[battle.session].push(battle);
+          } else {
+            $scope.data.sessions[battle.session].push(battle);
+          }
+        });
       });
 
       $scope.leaveRoom = function() {
