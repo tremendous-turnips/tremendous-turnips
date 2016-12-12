@@ -1,10 +1,23 @@
 var Sequelize = require('sequelize');
 
 if (process.env.CLEARDB_DATABASE_URL) { // FOR HEROKU DEPLOYMENT
-  var sequelize = new Sequelize('heroku_ffc37eb62708e4e', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    host: 'us-cdbr-iron-east-04.cleardb.net',
-    dialect: 'mysql'
-  });
+  var sequelize = require('sequelize-heroku').connect();
+
+  if (sequelize) {
+    sequelize.authenticate().then(function() {
+      var config = sequelize.connectionManager.config;
+      console.log('sequelize-heroku: Connected to '+config.host+' as '+config.username+'.');
+    }).catch( function(err) {
+        var config = sequelize.connectionManager.config;
+        console.log('Sequelize: Error connecting '+config.host+' as '+config.user+': '+err);
+    });
+  } else {
+    console.log('NO ENVIRONMENT VARIABLE FOUND FOR CLEAR DB');
+  }
+  // var sequelize = new Sequelize('heroku_ffc37eb62708e4e', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+  //   host: 'us-cdbr-iron-east-04.cleardb.net',
+  //   dialect: 'mysql'
+  // });
 } else {
   var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, { // FOR DEVELOPMENT
     host: 'localhost',
