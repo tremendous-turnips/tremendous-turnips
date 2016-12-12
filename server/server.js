@@ -36,11 +36,7 @@ app.post('/messages', function(req, res) {
 });
 
 app.get('/messages/session-next', function(req, res) {
-  db.Message.aggregate('session', 'DISTINCT', {plain: false})
-  .then(function(count) {
-    var next = count.length + 1;
-    res.send(next.toString());
-  });
+  MessageCtrl.findNextUniqueSessionID(req, res);
 });
 
 ////////////////////////////////////////////////////////////////////////////////

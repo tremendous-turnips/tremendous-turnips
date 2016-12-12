@@ -16,3 +16,11 @@ module.exports.saveMessage = function(req, res) {
   });
 };
 
+// Figure out what the next unique session ID should be
+module.exports.findNextUniqueSessionID = function(req, res) {
+  db.Message.aggregate('session', 'DISTINCT', {plain: false})
+  .then(function(count) {
+    var next = count.length + 1;
+    res.send(next.toString());
+  });
+};
