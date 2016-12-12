@@ -7,7 +7,10 @@ var io = require('socket.io')(server);
 var db = require('./app/config.js');
 var Sequelize = require('sequelize');
 var session = require('express-session');
-var ChatroomCtrl = require('./app/controllers/chatroom.js')
+
+// Controller dependencies
+var ChatroomCtrl = require('./app/controllers/chatroom.js');
+var MessageCtrl = require('./app/controllers/message.js');
 
 
 var port = process.env.PORT || 1337;
@@ -28,20 +31,8 @@ app.put('/lobby', function(req, res) {
   ChatroomCtrl.updateLobbyRooms(req, res);
 });
 
-// ROUTE TO DO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 app.post('/messages', function(req, res) {
-  console.log(req.body.chatRoom);
-  db.Message.create({
-    text: req.body.text,
-    user: req.body.user,
-    chatroom: req.body.chatRoom,
-    opponent: req.body.opponent,
-    session: req.body.session
-  })
-  .then(function() {
-    console.log('POSTED TEXT', req.body.text);
-    res.send('Some random message: posted to messages route');
-  });
+  MessageCtrl.saveMessage(req, res);
 });
 
 app.get('/messages/session-next', function(req, res) {
