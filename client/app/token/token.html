@@ -1,6 +1,17 @@
 <button class='btn btn-danger' ng-click='leaveRoom()'> Lobby </button>
-<h1> {{data.battles}} </h1>
-<h2 class="token-header">{{ chatroom }}</h2>
+
+
+<select ng-model='selectFilter' ng-value='session[1]' ng-options='session[1] for session in data.sessions'>
+</select>
+<div> SESSION: {{selectFilter[0]}}</div>
+<div> CHATROOM: {{selectFilter[1]}}</div>
+<div> OPPONENT: {{selectFilter[2]}}</div>
+<div ng-repeat='messages in selectFilter.slice(3, session.length)'>
+  <div> {{messages.user}}: {{messages.text}} </div>
+</div>
+<!-- <div ng-repeat='session in data.sessions'>
+</div> -->
+<!--< h2 class="token-header">{{ chatroom }}</h2>
 <h3>Stats</h3>
 <h4>Battle duration: {{ duration }}</h4>
 <div class="row">
@@ -30,4 +41,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
