@@ -41,7 +41,6 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
       $scope.insertUser = function(index, user, roomName) {
 
         Lobby.insertUser($scope.myuser, user, roomName, function(updated) {
-          console.log(updated);
           lobbySocket.emit('user enters room', $scope.myuser, user, roomName);
           Chatroom.currRoom = roomName;
           $location.path('/chatroom');

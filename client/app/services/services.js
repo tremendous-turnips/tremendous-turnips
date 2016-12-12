@@ -89,7 +89,40 @@ services.factory('Chatroom', function($http) {
   var currRoom = '';
   var opponent = '';
 
-  var postMessage = function(message, user, opponent, chatRoom) {
+  var opponentName = function(myuser, chatRoom, cb) {
+    return $http({
+      method: 'GET',
+      url: '/lobby',
+    })
+    .then(function (rooms) {
+      var opponent = '';
+      rooms.data.forEach(function(room) {
+        if (chatRoom === room.roomName) {
+          if (room.firstUser !== myuser) {
+            opponent = room.firstUser;
+          } else if (room.secondUser !== myuser){
+            opponent = room.secondUser;
+          }
+        }
+      });
+      cb(opponent);
+    });
+  };
+
+  var createSession = function(cb) {
+    return $http({
+      method: 'GET',
+      url: '/messages/session-next',
+    }).then(function(res) {
+      cb(res.data);
+    });
+  };
+
+  var endSession = function() {
+
+  };
+
+  var postMessage = function(message, user, opponent, chatRoom, session) {
     return $http({
       method: 'POST',
       url: '/messages',
@@ -97,7 +130,8 @@ services.factory('Chatroom', function($http) {
         text: message,
         user: user,
         chatRoom: chatRoom,
-        opponent: opponent
+        opponent: opponent,
+        session: session
       })
     })
     .then(function() {
@@ -131,7 +165,12 @@ services.factory('Chatroom', function($http) {
     validateUser: validateUser,
     postMessage: postMessage,
     leaveChatroom: leaveChatroom,
+
+    opponentName: opponentName,
+    createSession: createSession,
+    endSession: endSession
     grabChatrooms: grabChatrooms
+
   };
 });
 
