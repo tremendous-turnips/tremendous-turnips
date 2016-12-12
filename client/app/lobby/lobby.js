@@ -17,7 +17,7 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
         Lobby.fetchRooms(function(rooms) {
           $scope.allRooms.rooms = rooms.data;
         });
-      }
+      };
 
       $scope.fetchRooms();
 
@@ -42,24 +42,24 @@ lobby.controller('lobbyController', function($scope, $location, Lobby, Chatroom)
 
         Lobby.insertUser($scope.myuser, user, roomName, function(updated) {
           console.log(updated);
-          lobbySocket.emit('user enters room', $scope.myuser, user, roomName)
+          lobbySocket.emit('user enters room', $scope.myuser, user, roomName);
           Chatroom.currRoom = roomName;
           $location.path('/chatroom');
         });
       };
 
       $scope.redirectToToken = function(path) {
-        $location.path('/token')
-      }
+        $location.path('/token');
+      };
 
       $scope.logout = function(path) {
         // Destroy session
         Lobby.logoutUser();
-        $location.path('/login')
-      }
+        $location.path('/login');
+      };
     } else {
-      $location.path('/login')
+      $location.path('/login');
     }
-  })
+  });
 
 });
