@@ -1,8 +1,17 @@
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, {
-  host: 'localhost',
-  dialect: 'mysql'
-});
+
+if (process.env.CLEARDB_DATABASE_URL) {
+  var sequelize = new Sequelize('heroku_ffc37eb62708e4e', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+    host: 'us-cdbr-iron-east-04.cleardb.net',
+    dialect: 'mysql'
+  });
+} else {
+  var sequelize = new Sequelize('turnip', 'root', process.env.MYSQL_PASSWORD, {
+    host: 'localhost',
+    dialect: 'mysql'
+  });
+}
+
 
 var Chatroom = sequelize.define('chatrooms', {
   roomName: {type: Sequelize.STRING, field: 'room_name'},
