@@ -10,8 +10,8 @@ token.controller('tokenController', function($scope, $location, Token, Lobby, Ch
       $scope.data = {battles: []};
 
       Token.grabAllBattles(function(result) {
-        $scope.data.battles = result.data;
-        console.log(result.data);
+        $scope.data.battles = result;
+        console.log(result);
       })
 
       $scope.leaveRoom = function() {
