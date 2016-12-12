@@ -1,5 +1,3 @@
-var db = require('../config.js');
-
 module.exports.setUsername = function(req, res) {
   req.session.username = req.body.username;
   console.log('got it');

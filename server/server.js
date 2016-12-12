@@ -13,7 +13,7 @@ var session = require('express-session');
 // Controller dependencies
 var ChatroomCtrl = require('./app/controllers/chatroom.js');
 var MessageCtrl = require('./app/controllers/message.js');
-var UserCtrl = require('./app/controllers/user.js');
+var LoginCtrl = require('./app/controllers/login.js');
 
 // Environment variables
 var port = process.env.PORT || 1337;
@@ -44,7 +44,7 @@ var sockets = require('./sockets.js');
 app.use(express.static('socket.io'));
 ////////////////////////////////////////////////////////////////////////////////
 
-app.post('/users', UserCtrl.setUsername);
+app.post('/users', LoginCtrl.setUsername);
 
 app.get('/validLogin', function(req, res) {
   res.status('200').send(req.session.username);
