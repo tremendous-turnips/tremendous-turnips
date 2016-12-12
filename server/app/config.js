@@ -8,6 +8,7 @@ var Chatroom = sequelize.define('chatrooms', {
   roomName: {type: Sequelize.STRING, field: 'room_name'},
   firstUser: {type: Sequelize.STRING, field: 'first_user'},
   secondUser: {type: Sequelize.STRING, field: 'second_user'},
+  session: {type: Sequelize.INTEGER, field: 'session'}
 });
 
 var Message = sequelize.define('messages', {
@@ -29,27 +30,32 @@ Chatroom.sync({force: true}).then(function () {
   Chatroom.create({
     roomName: 'Hillary v Donald',
     firstUser: null,
-    secondUser: null
+    secondUser: null,
+    session: null
   });
   Chatroom.create({
     roomName: 'Emacs v Vim',
     firstUser: null,
-    secondUser: null
+    secondUser: null,
+    session: null
   });
   Chatroom.create({
     roomName: 'McDonalds v Burger King',
     firstUser: null,
-    secondUser: null
+    secondUser: null,
+    session: null
   });
   Chatroom.create({
     roomName: 'Coke v Pepsi',
     firstUser: null,
-    secondUser: null
+    secondUser: null,
+    session: null
   });
   Chatroom.create({
     roomName: 'Blue v Black',
     firstUser: null,
-    secondUser: null
+    secondUser: null,
+    session: null
   });
 });
 

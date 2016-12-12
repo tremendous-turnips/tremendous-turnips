@@ -142,6 +142,24 @@ app.post('/logout', function(req, res) {
   });
 });
 
+app.get('/chatrooms', function(req, res) {
+  db.Chatroom.findAll({})
+  .then(function(chatrooms) {
+    res.send(chatrooms);
+  });
+});
+
+app.put('/chatrooms', function(req, res) {
+  console.log(req.body, "PUT /chatrooms request!")
+  db.Chatroom.find({ where: { roomName: req.body.roomName } })
+  .then(function(room) {
+    room.updateAttributes({
+      session: req.body.session
+    });
+    res.send('Added session to room.');
+  });
+});
+
 app.post('/leavechatroom', function(req, res) {
   // Remove user from chatroom when leaving
   db.Chatroom.find({ where: { roomName: req.session.chatroomName } })
