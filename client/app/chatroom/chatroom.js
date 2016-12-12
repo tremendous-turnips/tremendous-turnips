@@ -94,7 +94,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
 
       // Listens for another user is typing
       socket.on('typing message', function(username, msg) {
-        // var opponentTyping = username + ' is typing...'; // Better UI
+        // var opponentTyping = username + ' is typing...'; // A different UI experience
         var opponentTyping = username + ': ' + msg; // SHOWS FULL CAPACITY OF WEB SOCKETS!!!
         var element = '<div class="userIsTyping chatNotifications">' + opponentTyping + '</div>';
         if (msg !== '') {
@@ -105,11 +105,13 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
           $('.userIsTyping').hide();
         }
 
-        // setTimeout(function() {
-        //   $('.userIsTyping').hide();
-        // }, 3000);
+        // Hide user text if no action is happening
+        setTimeout(function() {
+          $('.userIsTyping').hide();
+        }, 3000);
       });
-      ///////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////// end socket.io
+
       $scope.enterRoom = function() {
         socket.emit('enter', $scope.myuser, $scope.roomName);
       };
@@ -144,8 +146,6 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       $scope.showTyping = function() {
         socket.emit('typing', $scope.myuser, $scope.userMessage, $scope.roomName);
       };
-
-      // })
     } else {
       $location.path('/login');
     }
