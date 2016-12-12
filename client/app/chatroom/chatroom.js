@@ -14,7 +14,17 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
   }).then(function() {
     if ($scope.myuser !== '') {
       $scope.roomName = Chatroom.currRoom;
-      console.log('this is roomname', $scope.roomName);
+
+      Chatroom.opponentName($scope.myuser, $scope.roomName, function(opponent) {
+        if (!opponent) {
+          $('.messageList').append($('<li class="chatNotifications">').text('You are the first to enter the arena.'));
+          $scope.opponent = null;
+        } else {
+          $('.messageList').append($('<li class="chatNotifications">').text('Your opponent is ' + opponent));
+          $scope.opponent = opponent;
+        }
+      });
+
 
       // Set focus to input text field so user doesn't need to click on it to type
       $('.messageTextBox').focus();
@@ -30,11 +40,15 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
 
       // Listen for when opponent enters the room
       socket.on('opponent enter', function(username){
-        $('.messageList').append($('<li class="chatNotifications">').text(username + ' has entered the room.'));
+        $('.messageList').append($('<li class="chatNotifications">').text(username + ' has entered the arena.'));
         Chatroom.opponent = username;
+        Chatroom.createSession(function(session) {
+          $scope.session = session;
+          console.log('The new session is: ', session);
+        });
       });
       socket.on('opponent leave', function(username){
-        $('.messageList').append($('<li class="chatNotifications">').text(username + ' has left the room.'));
+        $('.messageList').append($('<li class="chatNotifications">').text(username + ' has left the arena.'));
         Chatroom.opponent = '';
       });
       // Listens for a new message from the server
@@ -45,7 +59,6 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
       // Listens for another user is typing
       socket.on('typing message', function(username, msg) {
         // var opponentTyping = username + ' is typing...'; // Better UI
-        $scope.opponent = username;
         var opponentTyping = username + ': ' + msg; // SHOWS FULL CAPACITY OF WEB SOCKETS!!!
         var element = '<div class="userIsTyping chatNotifications">' + opponentTyping + '</div>';
         if (msg !== '') {
@@ -80,7 +93,7 @@ chatroom.controller('chatroomController', function($scope, $location, $http, Cha
         socket.emit('chat message', $scope.myuser, $scope.userMessage); // This is a socket, not post request
 
         // Post requst to server to write to messages table
-        Chatroom.postMessage($scope.userMessage, $scope.myuser, $scope.opponent, $scope.roomName);
+        Chatroom.postMessage($scope.userMessage, $scope.myuser, $scope.opponent, $scope.roomName, $scope.session);
 
         // Clear message text box
         $('.messageList').append($('<li>').text(concatMessage));

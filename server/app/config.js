@@ -15,7 +15,7 @@ var Message = sequelize.define('messages', {
   user: {type: Sequelize.STRING},
   opponent: {type: Sequelize.STRING},
   chatroom: {type: Sequelize.STRING},
-  session: {type: Sequelize.STRING}
+  session: {type: Sequelize.INTEGER}
 });
 
 var User = sequelize.define('users', {
@@ -60,42 +60,56 @@ Message.sync({force: true}).then(function () {
     user: 'James',
     opponent: 'Matt',
     chatroom: 'Hillary v Donald',
-    session: '12345'
+    session: 1
   });
   Message.create({
     text: 'Hey!',
     user: 'Matt',
     opponent: 'James',
     chatroom: 'Hillary v Donald',
-    session: '12345'
+    session: 1
   });
   Message.create({
     text: 'How are you?',
     user: 'James',
     opponent: 'Matt',
     chatroom: 'Hillary v Donald',
-    session: '12345'
+    session: 1
   });
   Message.create({
     text: 'Good. How about you?',
     user: 'Matt',
     opponent: 'James',
     chatroom: 'Hillary v Donald',
-    session: '12345'
+    session: 1
   });
   Message.create({
     text: 'No complaints. Do you like Trump?',
     user: 'James',
     opponent: 'Matt',
     chatroom: 'Hillary v Donald',
-    session: '12345'
+    session: 1
   });
   Message.create({
     text: 'Not really.',
     user: 'Matt',
     opponent: 'James',
     chatroom: 'Hillary v Donald',
-    session: '12345'
+    session: 1
+  });
+  Message.create({
+    text: 'Anyone home?',
+    user: 'James',
+    opponent: 'Matt',
+    chatroom: 'Blue v Black',
+    session: 2
+  });
+  Message.create({
+    text: 'No. Go away.!',
+    user: 'Matt',
+    opponent: 'James',
+    chatroom: 'Blue v Black',
+    session: 2
   });
 });
 

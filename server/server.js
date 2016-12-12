@@ -62,11 +62,20 @@ app.post('/messages', function(req, res) {
     text: req.body.text,
     user: req.body.user,
     chatroom: req.body.chatRoom,
-    opponent: req.body.opponent
+    opponent: req.body.opponent,
+    session: req.body.session
   })
   .then(function() {
     console.log('POSTED TEXT', req.body.text);
     res.send('Some random message: posted to messages route');
+  });
+});
+
+app.get('/messages/session-next', function(req, res) {
+  db.Message.aggregate('session', 'DISTINCT', {plain: false})
+  .then(function(count) {
+    var next = count.length + 1;
+    res.send(next.toString());
   });
 });
 
